@@ -3,17 +3,20 @@ package manga.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.springframework.stereotype.Controller;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Controller
+
+
+@Entity
 public class Utilisateur implements Serializable {
 
 	/**
@@ -25,8 +28,8 @@ public class Utilisateur implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
 	
-	@Column(length = 100,nullable = false)
-	private String identifian;
+	@Column(length = 100)
+	private String identifiant;
 	
 	@Column(length = 50)
 	private String nom;
@@ -38,32 +41,32 @@ public class Utilisateur implements Serializable {
 	private String email;
 	
 	@Column(length = 50)
-	private Date dateNaissance;
-	
+	private String dateNaissance;
+	@JsonIgnore
 	@Column(nullable = false, unique = true)
 	private String mdp;
 	
 	
 /// dependance 
 	
-	@OneToMany
+	@ManyToOne
 	private Role role;
-	
+
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Token> tokens;
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Commentaire> commentaires;
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Adresse> adresses;
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Exigence> exigences;
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private  Collection<abonnement> abonnements;
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Emprunter> emprunters;
 	
@@ -76,9 +79,9 @@ public class Utilisateur implements Serializable {
 		tokens = new ArrayList<>();
 	}
 
-	public Utilisateur(String identifian, String nom, String prenom, String email, Date dateNaissance, String mdp) {
+	public Utilisateur(String identifian, String nom, String prenom, String email, String dateNaissance, String mdp) {
 	    this();
-		this.identifian = identifian;
+		this.identifiant = identifian;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -145,11 +148,11 @@ public class Utilisateur implements Serializable {
 	}
 
 	public String getIdentifian() {
-		return identifian;
+		return identifiant;
 	}
 
 	public void setIdentifian(String identifian) {
-		this.identifian = identifian;
+		this.identifiant = identifian;
 	}
 
 	public String getNom() {
@@ -176,11 +179,13 @@ public class Utilisateur implements Serializable {
 		this.email = email;
 	}
 
-	public Date getDateNaissance() {
+	
+
+	public String getDateNaissance() {
 		return dateNaissance;
 	}
 
-	public void setDateNaissance(Date dateNaissance) {
+	public void setDateNaissance(String dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
 
@@ -194,7 +199,7 @@ public class Utilisateur implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Utilisateur [identifian=" + identifian + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
+		return "Utilisateur [identifian=" + identifiant + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
 				+ ", dateNaissance=" + dateNaissance + ", mdp=" + mdp + "]";
 	}
 	
