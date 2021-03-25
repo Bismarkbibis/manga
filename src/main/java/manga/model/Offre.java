@@ -3,14 +3,15 @@ package manga.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.springframework.stereotype.Controller;
 
-@Controller
+
+@Entity
 public class Offre implements Serializable {
 
 	/**
@@ -31,7 +32,7 @@ public class Offre implements Serializable {
 	@ManyToOne
 	private abonnement abonnement;
 	@ManyToOne
-	private Offre offres;
+	private TvaAbonnement tvaAbonnement;
 	
 	
 	public Offre() {
@@ -66,11 +67,13 @@ public class Offre implements Serializable {
 	public void setAbonnement(abonnement abonnement) {
 		this.abonnement = abonnement;
 	}
-	public Offre getOffres() {
-		return offres;
+
+	
+	public TvaAbonnement getTvaAbonnement() {
+		return tvaAbonnement;
 	}
-	public void setOffres(Offre offres) {
-		this.offres = offres;
+	public void setTvaAbonnement(TvaAbonnement tvaAbonnement) {
+		this.tvaAbonnement = tvaAbonnement;
 	}
 	@Override
 	public String toString() {
