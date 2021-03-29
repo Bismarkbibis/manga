@@ -62,6 +62,9 @@ public class Manga implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String Edition;
 	
+	@Column(length = 50)
+	private int age;
+	
 	// dependance 
 	@ManyToOne
 	private Genre genre2;
@@ -73,6 +76,10 @@ public class Manga implements Serializable {
 	private Auteur auteur2;
 	@ManyToOne
 	private Tva tva;
+	@ManyToOne
+	private Accessible accessible;
+
+	
 	@OneToMany(mappedBy = "manga")
 	private Collection<Commentaire> commentaires;
 	@OneToMany(mappedBy = "manga")
@@ -94,9 +101,13 @@ public class Manga implements Serializable {
 	}
 
 
-	public Manga(String nom, String titre, String description, int nombrePage, int tom, String auteur, String genre,
-			String statut, Date dateSortie, String langue, String edition) {
-		this();
+
+
+
+	public Manga(Integer id, String nom, String titre, String description, int nombrePage, int tom, String auteur,
+			String genre, String statut, Date dateSortie, String langue, String edition, int age) {
+		super();
+		Id = id;
 		this.nom = nom;
 		this.titre = titre;
 		this.description = description;
@@ -108,7 +119,43 @@ public class Manga implements Serializable {
 		this.dateSortie = dateSortie;
 		this.langue = langue;
 		Edition = edition;
+		this.age = age;
 	}
+
+
+
+
+
+	public int getAge() {
+		return age;
+	}
+
+
+
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+
+
+
+	public Accessible getAccessible() {
+		return accessible;
+	}
+
+
+
+
+
+	public void setAccessible(Accessible accessible) {
+		this.accessible = accessible;
+	}
+
+
+
 
 
 	public String getNom() {

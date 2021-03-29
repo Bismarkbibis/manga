@@ -19,13 +19,17 @@ public class Offre implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public static final String premiere = "0-12 ans";
+	public static final String deuxieme ="13-17 ans";
+	public static final String troisiem ="18 ++";
+	
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY )
 	private Integer id;
 	
 	@Column(length = 100, nullable = false)
-	private String detaills;
-	@Column(length = 50, nullable = false)
+	private String nom;
+	@Column(length = 100)
 	private float prixHt;
 	
 	//dependance
@@ -40,7 +44,7 @@ public class Offre implements Serializable {
 	}
 	public Offre(String detaills, float prixHt) {
 		
-		this.detaills = detaills;
+		this.nom = detaills;
 		this.prixHt = prixHt;
 	}
 	public Integer getId() {
@@ -49,11 +53,11 @@ public class Offre implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getDetaills() {
-		return detaills;
+	public String getNom() {
+		return nom;
 	}
-	public void setDetaills(String detaills) {
-		this.detaills = detaills;
+	public void setNom(String detaills) {
+		this.nom = detaills;
 	}
 	public float getPrixHt() {
 		return prixHt;
@@ -77,7 +81,7 @@ public class Offre implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Offre [detaills=" + detaills + ", prixHt=" + prixHt + "]";
+		return "Offre [detaills=" + nom + ", prixHt=" + prixHt + "]";
 	}
 
 }

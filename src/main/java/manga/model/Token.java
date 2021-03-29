@@ -28,7 +28,7 @@ public class Token implements Serializable {
 	
 	@Column(nullable = true)
 	private String valeur;
-	
+	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateExpire;
 
