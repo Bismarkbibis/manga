@@ -1,15 +1,21 @@
 package manga.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import manga.Http.LoginSortant;
 import manga.Outile.CustomedException;
 import manga.model.Role;
+import manga.model.Token;
 import manga.model.Utilisateur;
 import manga.repository.RoleRepository;
+import manga.repository.TokenRepository;
 import manga.repository.UtilisateurRepository;
 
 @Service
@@ -21,13 +27,21 @@ public class UtilisateurService {
 	private PasswordEncoderService passwordEncoderService;
 	@Autowired
 	private RoleRepository roleRepository;
+	@Autowired
+	private TokenRepository tokenRepository;
 
-	HashMap<String, String> erreurs = new HashMap<>();
-
-	public Utilisateur createUser(String nom, String prenom, String identifiant, String dateNaissance, String email,
-			String mdp01, String mdp02) throws CustomedException, java.text.ParseException {
+	
+	public Utilisateur createUser(String nom, String prenom, String identifiant, String dateNaissance, String numtelephone,String email,
+			String mdp01, String mdp02) throws CustomedException {
+		HashMap<String, String> erreurs = new HashMap<>();
 		// verification de date de niassance
-
+		
+//		String regrexNumtel ="^(0|\\+33 )[1-9]([-. ]?[0-9]{2} ){3}([-. ]?[0-9]{2})$";
+//		if (!regrexNumtel.matches(regrexNumtel)) {
+//			erreurs.put("erreurNumero", "numero incorrecte");
+//		}
+		
+		
 		// verification identifiant
 		Optional<Utilisateur> optionalIdentifant = utilisateurRepository.chercherUtilisateurParidentifiant(identifiant);
 		if (optionalIdentifant.isPresent()) {
@@ -37,7 +51,7 @@ public class UtilisateurService {
 		// verification email
 		String regex = "[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*";
 		if (!email.matches(regex)) {
-			erreurs.put("errEmail", "email incprrecte");
+			erreurs.put("errEmail", "email incorrecte");
 		}
 
 		Optional<Utilisateur> optionUtilisateur = utilisateurRepository.chercherUtilisateurParEmail(email);
@@ -46,7 +60,7 @@ public class UtilisateurService {
 		}
 
 		// verification du mdp
-		if (!mdp01.equals(mdp02) || !mdp02.equals(mdp01)) {
+		if (!mdp01.equals(mdp02)) {
 			erreurs.put("erreur Mots de passe ", "Les mots de passe ne sont pas identiques");
 		} else if (mdp01.equals(mdp02) && mdp01.length() > 10) {
 			erreurs.put("erreursMdp", "il faut au moins 10 caractères pour Mdp");
@@ -60,6 +74,8 @@ public class UtilisateurService {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setNom(nom);
 		utilisateur.setPrenom(prenom);
+		utilisateur.setIdentifiant(identifiant);
+		utilisateur.setNumerotel(numtelephone);
 		// a modifier
 		utilisateur.setDateNaissance(dateNaissance);
 		String encodPasseword = passwordEncoderService.encoder(mdp01);
@@ -72,5 +88,51 @@ public class UtilisateurService {
 
 		return utilisateur;
 	}
+	
+	public LoginSortant login(String email, String password) throws Exception {
+		Optional<Utilisateur> optional =utilisateurRepository.findByEmail(email);
+		Exception ex = new Exception("Erreur sur identifiant ou le mot de passe");
+		if (optional.isPresent()) {
+			Utilisateur utilisateur=optional.get();//recupere l'utilisateur;
+			boolean ok= passwordEncoderService.verifier(password, utilisateur.getMdp());
+			if (ok) {
+				 //generer le token 
+				Token token01=genererToken();
+				token01.setUtilisateur(utilisateur);// on affecte le token au utlisateur
+				tokenRepository.save(token01);
+				
+				 // cree la valeur de retour
+				LoginSortant loginSortant= new LoginSortant();
+				loginSortant.setIdentifiant(utilisateur.getIdentifiant());
+				loginSortant.setEmail(utilisateur.getEmail());
+				loginSortant.setNom(utilisateur.getNom());
+				loginSortant.setPrenom(utilisateur.getPrenom());
+				loginSortant.setNumero(utilisateur.getNumerotel());
+				loginSortant.setRole(utilisateur.getRole().getNom());
+				loginSortant.setToken(token01.getValeur());
+				
+				return loginSortant;
+			}else {
+				throw ex;
+			}
+		}else {
+			throw ex;
+		}
+		
+	}
+	
+
+	private Token genererToken() {
+		UUID uuid = UUID.randomUUID();
+		String valeurToken=uuid.toString(); // le token envoyer part le toString
+		
+		Calendar calendar =Calendar.getInstance(); // permet de recupere la date et l'heur actuelle
+		// la durere du token 
+		// on le met 15min
+		calendar.add(Calendar.MINUTE, 30); // la durer
+		Date expirationDate=calendar.getTime(); //constrution de date 
+		return new Token(valeurToken, expirationDate);
+	}
+	
 
 }

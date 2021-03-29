@@ -2,62 +2,51 @@ package manga.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-@Entity
-public class Type implements Serializable {
+import javax.persistence.OneToMany;
+
+
+public class Accessible implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY )
-	private Integer id;
 	
-	@Column(length = 70, nullable = false)
-	private String nom;
+	public static final String premiere = "0-12 ans";
+	public static final String deuxieme ="13-17 ans";
+	public static final String troisiem ="18 ++ ans";
 	
-	//dependance
-	
-	@ManyToOne
+	@OneToMany(mappedBy ="accessible")
 	private Manga manga;
 
-	public Type() {
+	
+	public Accessible() {
 		
 	}
 
-	public Type(String nom) {
-		this.nom = nom;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 
 	public Manga getManga() {
 		return manga;
 	}
 
+
 	public void setManga(Manga manga) {
 		this.manga = manga;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Type [nom=" + nom + "]";
+		return "Accessible [premiere=" + premiere + ", deuxieme=" + deuxieme + ", troisiem=" + troisiem + ", manga="
+				+ manga + "]";
 	}
-	
-	
-	
 
 }

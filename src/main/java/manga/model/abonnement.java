@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 
@@ -31,12 +33,14 @@ public class abonnement implements Serializable{
 	private String nom ;
 	@Column(nullable = false, length = 70)
 	private String prenom ;
-	@Column(nullable = false)
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date ;
 	@Column(nullable = false)
 	private int duree;
-	@Column(nullable = false)
-	private float prix;
+	@Column(length = 50)
+	private float prixHT;
+	private String numeroabonnement;
 	
 	
 	//dependdance
@@ -54,14 +58,49 @@ public class abonnement implements Serializable{
 	}
 
 
-	public abonnement(String nom, String prenom, Date date, int duree, float prix) {
+
+
+	public abonnement(Integer id, String nom, String prenom, Date date, int duree, float prixHT,
+			String numeroabonnement) {
 		this();
+		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.date = date;
 		this.duree = duree;
-		this.prix = prix;
+		this.prixHT = prixHT;
+		this.numeroabonnement = numeroabonnement;
 	}
+
+
+
+
+	public float getPrixHT() {
+		return prixHT;
+	}
+
+
+
+
+	public void setPrixHT(float prixHT) {
+		this.prixHT = prixHT;
+	}
+
+
+
+
+	public String getNumeroabonnement() {
+		return numeroabonnement;
+	}
+
+
+
+
+	public void setNumeroabonnement(String numeroabonnement) {
+		this.numeroabonnement = numeroabonnement;
+	}
+
+
 
 
 	public String getNom() {
@@ -105,12 +144,12 @@ public class abonnement implements Serializable{
 
 
 	public float getPrix() {
-		return prix;
+		return prixHT;
 	}
 
 
 	public void setPrix(float prix) {
-		this.prix = prix;
+		this.prixHT = prix;
 	}
 
 
@@ -147,7 +186,7 @@ public class abonnement implements Serializable{
 	@Override
 	public String toString() {
 		return "abonnement [nom=" + nom + ", prenom=" + prenom + ", date=" + date + ", duree=" + duree + ", prix="
-				+ prix + "]";
+				+ prixHT + "]";
 	}
 
 

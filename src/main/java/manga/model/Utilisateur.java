@@ -24,9 +24,10 @@ public class Utilisateur implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	@GeneratedValue(strategy =GenerationType.IDENTITY )
+	private Integer id;
 	
 	@Column(length = 100)
 	private String identifiant;
@@ -42,16 +43,18 @@ public class Utilisateur implements Serializable {
 	
 	@Column(length = 50)
 	private String dateNaissance;
+	@Column(length = 50)
+	private String numerotel;
 	@JsonIgnore
 	@Column(nullable = false, unique = true)
 	private String mdp;
 	
 	
 /// dependance 
-	
+	@JsonIgnore
 	@ManyToOne
 	private Role role;
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Token> tokens;
 	@JsonIgnore
@@ -79,130 +82,282 @@ public class Utilisateur implements Serializable {
 		tokens = new ArrayList<>();
 	}
 
-	public Utilisateur(String identifian, String nom, String prenom, String email, String dateNaissance, String mdp) {
-	    this();
-		this.identifiant = identifian;
+
+	
+	
+
+	public Utilisateur(String identifiant, String nom, String prenom, String email, String dateNaissance,
+			String numerotel, String mdp) {
+		super();
+		this.identifiant = identifiant;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.dateNaissance = dateNaissance;
+		this.numerotel = numerotel;
 		this.mdp = mdp;
 	}
-	
-	
 
-	public Collection<abonnement> getAbonnements() {
-		return abonnements;
+
+
+
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setAbonnements(Collection<abonnement> abonnements) {
-		this.abonnements = abonnements;
+
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Collection<Emprunter> getEmprunters() {
-		return emprunters;
-	}
 
-	public void setEmprunters(Collection<Emprunter> emprunters) {
-		this.emprunters = emprunters;
-	}
 
-	public Collection<Exigence> getExigences() {
-		return exigences;
-	}
 
-	public void setExigences(Collection<Exigence> exigences) {
-		this.exigences = exigences;
-	}
 
-	public Collection<Commentaire> getCommentaires() {
-		return commentaires;
-	}
-
-	public void setCommentaires(Collection<Commentaire> commentaires) {
-		this.commentaires = commentaires;
-	}
-
-	public Collection<Adresse> getAdresses() {
-		return adresses;
-	}
-
-	public void setAdresses(Collection<Adresse> adresses) {
-		this.adresses = adresses;
-	}
-
-	public Collection<Token> getTokens() {
-		return tokens;
-	}
-
-	public void setTokens(Collection<Token> tokens) {
-		this.tokens = tokens;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public String getIdentifian() {
+	public String getIdentifiant() {
 		return identifiant;
 	}
 
-	public void setIdentifian(String identifian) {
-		this.identifiant = identifian;
+
+
+
+
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
 	}
+
+
+
+
 
 	public String getNom() {
 		return nom;
 	}
 
+
+
+
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
+
+
+
 
 	public String getPrenom() {
 		return prenom;
 	}
 
+
+
+
+
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
+
+
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
+
+
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	
+
+
+
 
 	public String getDateNaissance() {
 		return dateNaissance;
 	}
 
+
+
+
+
 	public void setDateNaissance(String dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
+
+
+
+
+
+	public String getNumerotel() {
+		return numerotel;
+	}
+
+
+
+
+
+	public void setNumerotel(String numerotel) {
+		this.numerotel = numerotel;
+	}
+
+
+
+
 
 	public String getMdp() {
 		return mdp;
 	}
 
+
+
+
+
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
 
+
+
+
+
+	public Role getRole() {
+		return role;
+	}
+
+
+
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+
+
+
+
+	public Collection<Token> getTokens() {
+		return tokens;
+	}
+
+
+
+
+
+	public void setTokens(Collection<Token> tokens) {
+		this.tokens = tokens;
+	}
+
+
+
+
+
+	public Collection<Commentaire> getCommentaires() {
+		return commentaires;
+	}
+
+
+
+
+
+	public void setCommentaires(Collection<Commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+
+
+
+
+
+	public Collection<Adresse> getAdresses() {
+		return adresses;
+	}
+
+
+
+
+
+	public void setAdresses(Collection<Adresse> adresses) {
+		this.adresses = adresses;
+	}
+
+
+
+
+
+	public Collection<Exigence> getExigences() {
+		return exigences;
+	}
+
+
+
+
+
+	public void setExigences(Collection<Exigence> exigences) {
+		this.exigences = exigences;
+	}
+
+
+
+
+
+	public Collection<abonnement> getAbonnements() {
+		return abonnements;
+	}
+
+
+
+
+
+	public void setAbonnements(Collection<abonnement> abonnements) {
+		this.abonnements = abonnements;
+	}
+
+
+
+
+
+	public Collection<Emprunter> getEmprunters() {
+		return emprunters;
+	}
+
+
+
+
+
+	public void setEmprunters(Collection<Emprunter> emprunters) {
+		this.emprunters = emprunters;
+	}
+
+
+
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+
+
+
 	@Override
 	public String toString() {
-		return "Utilisateur [identifian=" + identifiant + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
-				+ ", dateNaissance=" + dateNaissance + ", mdp=" + mdp + "]";
+		return "Utilisateur [identifiant=" + identifiant + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
+				+ ", dateNaissance=" + dateNaissance + ", numerotel=" + numerotel + ", role=" + role + ", adresses="
+				+ adresses + "]";
 	}
 	
+
 	
 	
 }
