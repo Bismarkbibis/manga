@@ -7,8 +7,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,51 +21,85 @@ public class Emprunter implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	public static final int EmprunteMax = 5;
+	public static final int DelaiMax = 10;
 
+	@Id
+	@Column(nullable = true, unique = false)
+	private String numEmprunter;    
+	
+	
 	@Column(length = 50)
 	private String nom;
+	
 	@Column(length = 50)
 	private String prenom;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateEmprunt;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateRetour;
 
 	// dependance
 	@ManyToOne
-	private Utilisateur utilisateur;
-	@OneToMany(mappedBy = "emprunter")
-	private Collection<Manga> mangas;
+	private Abonnement abonnement;
+	
 
+	
+	@OneToMany(mappedBy = "emprunter")
+	private Collection<LignEmprunt> lignEmprunts;
+	@OneToMany(mappedBy = "emprunters")
+	private Collection<EmpruntInforClient> empruntInforClients;
+	
 	public Emprunter() {
-		mangas = new ArrayList<>();
+		lignEmprunts = new ArrayList<>();
+		empruntInforClients = new ArrayList<>();
 	}
 
-	public Emprunter(String nom, String prenom, Date dateEmprunt, Date dateRetour) {
+	public Emprunter(String numEmprunter, String nom, String prenom, Date dateEmprunt, Date dateRetour) {
 		this();
+		this.numEmprunter = numEmprunter;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateEmprunt = dateEmprunt;
 		this.dateRetour = dateRetour;
 	}
 
-	public Collection<Manga> getMangas() {
-		return mangas;
+	
+	
+	public Collection<EmpruntInforClient> getEmpruntInforClients() {
+		return empruntInforClients;
 	}
 
-	public void setMangas(Collection<Manga> mangas) {
-		this.mangas = mangas;
+	public void setEmpruntInforClients(Collection<EmpruntInforClient> empruntInforClients) {
+		this.empruntInforClients = empruntInforClients;
 	}
 
-	public Integer getId() {
-		return Id;
+
+
+	public String getNumEmprunter() {
+		return numEmprunter;
 	}
 
-	public void setId(Integer id) {
-		Id = id;
+	public void setNumEmprunter(String numEmprunter) {
+		this.numEmprunter = numEmprunter;
+	}
+
+	public Abonnement getAbonnement() {
+		return abonnement;
+	}
+
+	public void setAbonnement(Abonnement abonnement) {
+		this.abonnement = abonnement;
+	}
+
+	public Collection<LignEmprunt> getLignEmprunts() {
+		return lignEmprunts;
+	}
+
+	public void setLignEmprunts(Collection<LignEmprunt> lignEmprunts) {
+		this.lignEmprunts = lignEmprunts;
 	}
 
 	public String getNom() {
@@ -100,14 +132,6 @@ public class Emprunter implements Serializable {
 
 	public void setDateRetour(Date dateRetour) {
 		this.dateRetour = dateRetour;
-	}
-
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
 	}
 
 	@Override

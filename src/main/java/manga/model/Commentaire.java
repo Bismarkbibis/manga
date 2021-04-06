@@ -61,28 +61,18 @@ public class Commentaire implements Serializable {
 	public String getAvis() {
 		return avis;
 	}
-
-
 	public void setAvis(String avis) {
 		this.avis = avis;
 	}
-
-
 	public Date getCmmDate() {
 		return cmmDate;
 	}
-
-
 	public void setCmmDate(Date cmmDate) {
 		this.cmmDate = cmmDate;
 	}
-
-
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
-
-
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}

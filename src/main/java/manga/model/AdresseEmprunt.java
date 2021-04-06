@@ -5,34 +5,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
-
-@Entity
-public class Adresse implements Serializable {
+public class AdresseEmprunt implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
-	private Integer Id;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+
 	@Column(nullable = false, length = 70)
 	private String nom;
 
 	@Column(nullable = false, length = 70)
 	private String prenom;
 	
-
 	@Column(nullable = false, length = 70)
 	private String rue;
 	
@@ -41,56 +35,24 @@ public class Adresse implements Serializable {
 	
 	@Column(nullable = false, length = 50)
 	private String ville;
+		
+//DEPENDANCE
+	@OneToMany
+	private Collection<Emprunter> emprunters;
 
-	
-	//dependance 
-	@ManyToOne
-	private Utilisateur utilisateur;
-	
-	@OneToMany(mappedBy = "adresseLivraison")
-	private Collection<Commande> commandesLivraison;
-	
-	@OneToMany (mappedBy = "adresseFacture")
-	private Collection<Commande> commandesFacture;
-	
-	
-	public Adresse() {
-		 commandesLivraison=  new ArrayList<>();
-		 commandesFacture=  new ArrayList<>();
+
+	public AdresseEmprunt() {
+		emprunters = new ArrayList<>();
 	}
 
-	public Adresse(String nom, String prenom, String rue, String cp, String ville) {
+
+	public AdresseEmprunt( String nom, String prenom, String rue, String cp, String ville) {
 		this();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.rue = rue;
 		this.cp = cp;
 		this.ville = ville;
-	}
-
-	
-	public Collection<Commande> getCommandesLivraison() {
-		return commandesLivraison;
-	}
-
-	public void setCommandesLivraison(Collection<Commande> commandesLivraison) {
-		this.commandesLivraison = commandesLivraison;
-	}
-
-	public Collection<Commande> getCommandesFacture() {
-		return commandesFacture;
-	}
-
-	public void setCommandesFacture(Collection<Commande> commandesFacture) {
-		this.commandesFacture = commandesFacture;
-	}
-
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
 	}
 
 	public String getNom() {
@@ -128,19 +90,21 @@ public class Adresse implements Serializable {
 	public String getVille() {
 		return ville;
 	}
-
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+	public Collection<Emprunter> getEmprunters() {
+		return emprunters;
+	}
+
+	public void setEmprunters(Collection<Emprunter> emprunters) {
+		this.emprunters = emprunters;
 	}
 
 	@Override
 	public String toString() {
-		return "Adresse [nom=" + nom + ", prenom=" + prenom + ", rue=" + rue + ", cp=" + cp + ", ville=" + ville + "]";
-	}
+		return "AdresseEmprunt [nom=" + nom + ", prenom=" + prenom + ", rue=" + rue + ", cp=" + cp + ", ville=" + ville
+				+ "]";
+	}	
 	
-	
-	
-	
-
-
 }

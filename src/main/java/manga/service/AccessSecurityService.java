@@ -30,7 +30,8 @@ public class AccessSecurityService {
 			return Optional.empty(); // je retourn une enveloppe vide
 		}else {
 			// connesion avec authentificatiioon
-			valeurToken = valeurToken.replace("Bearer ", " ");//je remplace mot Bearer et lespace part une chaien vide pour garder uniquement le token
+			valeurToken = valeurToken.replace("Bearer ", "");//je remplace mot Bearer et lespace part une chaien vide pour garder uniquement le token
+//			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+valeurToken+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><");
 			Optional<Token> optional=tokenRepository.selectByValeur(valeurToken);
 			return optional;
 		}

@@ -27,7 +27,7 @@ public class LoginControlleur {
 	//HttpServletRequest : il encapsule les donner de la requete  a voir 
 	@PostMapping("/test")
 	public String testerPoste(HttpServletRequest request ) {
-		String valeurtoken = request.getHeader("Authorization");
+		 String valeurtoken = request.getHeader("Authorization");
 		 System.out.println(" requet "+valeurtoken);
 		return "bon connexion";
 	}
@@ -36,7 +36,6 @@ public class LoginControlleur {
 	//@RequestBody :les information de notre requete on convertie vers un ibjet de type loginentrant
 	@PostMapping("/connexion")
 	public ResponseEntity<LoginSortant> login(@RequestBody LoginEntrant info) {
-	
 		try {
 			LoginSortant loginSortant=  utilisateurService.login(info.getEmail(), info.getPasseword());
 			return ResponseEntity.ok(loginSortant);

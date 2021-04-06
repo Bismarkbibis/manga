@@ -5,14 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import java.util.UUID;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import manga.model.Abonnement;
 import manga.model.Offre;
 import manga.model.Utilisateur;
-import manga.model.abonnement;
+import manga.repository.AbonnementRepository;
 import manga.repository.OffreRepository;
 
 @Service
@@ -20,6 +19,8 @@ public class AbonnementService {
 
 	@Autowired
 	private OffreRepository offreRepository;
+	@Autowired
+	private AbonnementRepository abonnementRepository;
 
 	public String genereNumbre() {
 		UUID uuid = UUID.randomUUID();
@@ -27,18 +28,27 @@ public class AbonnementService {
 		return nombre;
 	}
 
-	public abonnement creatAbonnee(Utilisateur user, String offre, String email) {
-
-		Optional<Offre> offreClient = offreRepository.findRoleByNom(offre);
+	public Abonnement creatAbonnee(Utilisateur user, String offre) {
+		// convertir en integer
+		int offrEntier = Integer.valueOf(offre);
+		Optional<Offre> offreClient = offreRepository.findById(offrEntier);
 		if (offreClient.isPresent()) {
+//			System.out.println("-----------------------------------" + offreClient);
 			Offre offre01 = offreClient.get();
 			// la date de creation
-			abonnement abonnement = new abonnement();
-			abonnement.set
-		} else {
-			return null;
-		}
+			Abonnement abonnement = new Abonnement();
+			abonnement.setUtilisateur(user);
+			abonnement.setNumeroabonnement(genereNumbre());
+			abonnement.setPrix(offre01.getPrixHt());
+			abonnement.setNom(user.getNom());
+			abonnement.setPrenom(user.getPrenom());
+			abonnement.setDate(new Date());
+			offre01.setAbonnement(abonnement);
+			abonnement.setOffre(offre01);
 
+			abonnementRepository.save(abonnement);
+			return abonnement;
+		}
 		return null;
 	}
 }
