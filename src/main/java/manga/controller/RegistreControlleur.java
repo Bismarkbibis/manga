@@ -22,9 +22,8 @@ public class RegistreControlleur {
 	
 	@PostMapping("/inscrption")
 	public ResponseEntity<Utilisateur> creatUser(@RequestBody RegistreRentrant Info){
-		
 		try {
-			Utilisateur user =utilisateurService.createUser(Info.getNom(), Info.getPrenom(),Info.getIdentifiant(), Info.getDateNaissance(),Info.getNumero(), Info.getEmail(),Info.getMdp(), Info.getMdp2());
+			Utilisateur user =utilisateurService.createUser(Info.getNom(), Info.getPrenom(),Info.getIdentifiant(), Info.getAge(),Info.getNumero(), Info.getEmail(),Info.getMdp(), Info.getMdp2());
 			return ResponseEntity.ok(user);
 		} catch (Exception e) {
 			System.out.println("les donnee : "+Info);

@@ -11,40 +11,35 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 @Entity
-public class Genre implements Serializable {
+public class CompteStatus implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public static final String ACTIVE = "Abonnement-Active";
+	public static final String FERMER ="Abonnement-Annuler";
+	public static final String LISTENOIR ="Abonnement-ListeNoir";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	private Integer id ;
+	
 	@Column(length = 50)
 	private String nom;
 	
-	//dependance
-	@OneToMany(mappedBy = "genre")
-	private Collection<Manga> mangas;
+	@OneToMany(mappedBy = "compteStatus")
+	private Collection<Abonnement> abonnements;
 
-	public Genre() {
-		mangas = new ArrayList<>();
+	public CompteStatus() {
+		abonnements = new ArrayList<>();
 	}
 
-	public Genre(String nom) {
+	public CompteStatus(String nom) {
 		this();
 		this.nom = nom;
-	}
-
-	public Integer getId() {
-		return Id;
-	}
-
-	public void setId(Integer id) {
-		Id = id;
 	}
 
 	public String getNom() {
@@ -55,23 +50,18 @@ public class Genre implements Serializable {
 		this.nom = nom;
 	}
 
-	public Collection<Manga> getMangas() {
-		return mangas;
+	public Collection<Abonnement> getAbonnements() {
+		return abonnements;
 	}
 
-	public void setMangas(Collection<Manga> mangas) {
-		this.mangas = mangas;
+	public void setAbonnements(Collection<Abonnement> abonnements) {
+		this.abonnements = abonnements;
 	}
 
 	@Override
 	public String toString() {
-		return "Genre [nom=" + nom + "]";
+		return "CompteStatus [nom=" + nom + ", abonnements=" + abonnements + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
+
 }

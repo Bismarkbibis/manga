@@ -16,4 +16,5 @@ public class mangaService {
 	public List<Actualiter> getAllActu() {
 		return actualiterRepository.findAll();
 	}
+	
 }

@@ -8,8 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-
+import javax.persistence.OneToOne;
 
 @Entity
 public class Offre implements Serializable {
@@ -33,8 +32,8 @@ public class Offre implements Serializable {
 	private float prixHt;
 	
 	//dependance
-	@ManyToOne
-	private abonnement abonnement;
+	@OneToOne
+	private Abonnement abonnement;
 	@ManyToOne
 	private TvaAbonnement tvaAbonnement;
 	
@@ -65,10 +64,10 @@ public class Offre implements Serializable {
 	public void setPrixHt(float prixHt) {
 		this.prixHt = prixHt;
 	}
-	public abonnement getAbonnement() {
+	public Abonnement getAbonnement() {
 		return abonnement;
 	}
-	public void setAbonnement(abonnement abonnement) {
+	public void setAbonnement(Abonnement abonnement) {
 		this.abonnement = abonnement;
 	}
 

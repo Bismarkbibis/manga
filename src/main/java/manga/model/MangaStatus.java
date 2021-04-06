@@ -10,37 +10,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 @Entity
-public class Auteur  implements Serializable{
-	
+public class MangaStatus implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
+
 	
-	@Column(length = 50, nullable = false)
+	public static final String RESERVER = "Manga-Reserer";
+	public static final String DISPONIBLE ="Manga-Disponible";
+	public static final String PERDU ="Manga-PERDU";
+	public static final String PRETER ="Manga-PRETER";
+
+	@Column(length = 50)
 	private String nom;
 	
-	@Column(length = 50)
-	private String prenom;
-
-	//dependance
-	@OneToMany(mappedBy ="auteur")
+	@OneToMany(mappedBy = "mangaStatus")
 	private Collection<Manga> mangas;
-	
-	public Auteur() {
+
+	public MangaStatus() {
 		mangas = new ArrayList<>();
 	}
+	
+	
+	
 
-	public Auteur(String nom, String prenom) {
+	public MangaStatus(String nom) {
 		this();
 		this.nom = nom;
-		this.prenom = prenom;
 	}
+
 
 
 
@@ -52,28 +59,8 @@ public class Auteur  implements Serializable{
 		this.mangas = mangas;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
 	@Override
 	public String toString() {
-		return "Auteur [nom=" + nom + ", prenom=" + prenom + "]";
+		return "MangaStatus [mangas=" + mangas + "]";
 	}
-	
-	
-	
-
 }

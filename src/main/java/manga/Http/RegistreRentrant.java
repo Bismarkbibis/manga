@@ -2,12 +2,14 @@ package manga.Http;
 
 
 
+
 public class RegistreRentrant {
 
 	private String nom;
 	private String prenom;
 	private String identifiant;
-	private String dateNaissance;
+//	private String dateNaissance;
+	int age ;
 	private String numero;
 	private String mdp;
 	private String mdp2;
@@ -41,12 +43,21 @@ public class RegistreRentrant {
 	public void setIdentifiant(String identifiant) {
 		this.identifiant = identifiant;
 	}
-	public String getDateNaissance() {
-		return dateNaissance;
+
+
+
+public int getAge() {
+		return age;
 	}
-	public void setDateNaissance(String dateNaissance) {
-		this.dateNaissance = dateNaissance;
+	public void setAge(int age) {
+		this.age = age;
 	}
+	//	public String getDateNaissance() {
+//		return dateNaissance;
+//	}
+//	public void setDateNaissance(String dateNaissance) {
+//		this.dateNaissance = dateNaissance;
+//	}
 	public String getMdp() {
 		return mdp;
 	}
@@ -67,8 +78,9 @@ public class RegistreRentrant {
 	}
 	@Override
 	public String toString() {
-		return "RegistreRentrant [nom=" + nom + ", prenom=" + prenom + ", identifiant=" + identifiant
-				+ ", dateNaissance=" + dateNaissance + ", email=" + email + "]";
+		return "RegistreRentrant [nom=" + nom + ", prenom=" + prenom + ", identifiant=" + identifiant + ", age=" + age
+				+ ", numero=" + numero + ", mdp=" + mdp + ", mdp2=" + mdp2 + ", email=" + email + "]";
 	}
+
 
 }
