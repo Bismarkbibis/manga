@@ -1,9 +1,8 @@
 package manga.service;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import manga.Http.LoginSortant;
 import manga.Outile.CustomedException;
+import manga.model.Penaliter;
 import manga.model.Role;
 import manga.model.Token;
 import manga.model.Utilisateur;
@@ -33,32 +33,19 @@ public class UtilisateurService {
 	private RoleRepository roleRepository;
 	@Autowired
 	private TokenRepository tokenRepository;
-	
-	public int clientAge(String age) throws ParseException {
-		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		  Date dateNiassance  =sdf.parse(age);
-		  Calendar calendar= Calendar.getInstance();
-		  calendar.setTime(dateNiassance);
-		  
-		  int year = calendar.get(Calendar.YEAR);
-		  int month = calendar.get(Calendar.MONTH);
-		  int date = calendar.get(Calendar.DATE);
-		  
-		  LocalDate l1 = LocalDate.of(year, month, date);
-		  LocalDate now1 = LocalDate.now();
-		  Period period =Period.between(l1, now1); 
-		 int ageClient  = period.getDays();
-		  return ageClient;
+
+	public int clientAge(String birthDate) throws ParseException {		
+		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");                           
+	    int d1 = Integer.parseInt(formatter.format(birthDate));                            
+	    int d2 = Integer.parseInt(formatter.format(new Date()));                          
+	    int age = (d2 - d1) / 10000;     
+		return age;
 	}
 
-	public Utilisateur createUser(String nom, String prenom, String identifiant,int age ,
-			String numtelephone, String email, String mdp01, String mdp02) throws CustomedException {
-		
-		
-		HashMap<String, String> erreurs = new HashMap<>();
-		// verification de date de niassance
-//		int age = clientAge(dateNaissance);
+	public Utilisateur createUser(String nom, String prenom, String identifiant, String dateNaissance,
+			String numtelephone, String email, String mdp01, String mdp02) throws CustomedException, ParseException {
 
+		HashMap<String, String> erreurs = new HashMap<>();
 		// verification identifiant
 		Optional<Utilisateur> optionalIdentifant = utilisateurRepository.chercherUtilisateurParidentifiant(identifiant);
 		if (optionalIdentifant.isPresent()) {
@@ -93,13 +80,19 @@ public class UtilisateurService {
 		utilisateur.setPrenom(prenom);
 		utilisateur.setIdentifiant(identifiant);
 		utilisateur.setNumerotel(numtelephone);
-		utilisateur.setAge(age);
-		// a modifier
+		utilisateur.setDateNaissance(dateNaissance);
+// verifier 
+		Penaliter penaliter = new  Penaliter(true);
+		utilisateur.setPenaliter(penaliter);
+		
+		utilisateur.setAge(clientAge(dateNaissance));
+		utilisateur.setCompteStatue(Utilisateur.active);
+// a modifier
 //		utilisateur.setDateNaissance(dateNaissance);
 		String encodPasseword = passwordEncoderService.encoder(mdp01);
 		utilisateur.setMdp(encodPasseword);
 		utilisateur.setEmail(email);
-		// a changer en user 
+		// a changer en user
 		Optional<Role> optional = roleRepository.findRoleByNom(Role.USER);
 		Role roleUser = optional.get();
 		utilisateur.setRole(roleUser);
@@ -139,7 +132,6 @@ public class UtilisateurService {
 		}
 
 	}
-
 	private Token genererToken() {
 		UUID uuid = UUID.randomUUID();
 		String valeurToken = uuid.toString(); // le token envoyer part le toString

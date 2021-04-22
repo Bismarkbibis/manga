@@ -7,6 +7,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,85 +23,134 @@ public class Emprunter implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final int EmprunteMax = 5;
-	public static final int DelaiMax = 10;
-
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+
 	@Column(nullable = true, unique = false)
-	private String numEmprunter;    
+	private String numEmprunter;
 	
+	@Column(length = 50)
+	private int tom;
 	
 	@Column(length = 50)
 	private String nom;
-	
+
 	@Column(length = 50)
 	private String prenom;
-	
+	@Column(length = 50)
+	private String rue;
+	@Column(length = 50)
+	private String cp;
+	@Column(length = 50)
+	private String ville;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateEmprunt;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateRetour;
 
 	// dependance
 	@ManyToOne
-	private Abonnement abonnement;
-	
+	private Utilisateur utilisateur;
 
+	@OneToMany(mappedBy = "emprunter")
+	private Collection<Manga> mangas;
 	
 	@OneToMany(mappedBy = "emprunter")
-	private Collection<LignEmprunt> lignEmprunts;
-	@OneToMany(mappedBy = "emprunters")
-	private Collection<EmpruntInforClient> empruntInforClients;
+	private Collection<Reservation> reservations;
 	
 	public Emprunter() {
-		lignEmprunts = new ArrayList<>();
-		empruntInforClients = new ArrayList<>();
+		mangas = new ArrayList<>();
+		reservations = new ArrayList<>();
 	}
 
-	public Emprunter(String numEmprunter, String nom, String prenom, Date dateEmprunt, Date dateRetour) {
+	public Emprunter(String numEmprunter, String nom, String prenom, String rue, String cp, String ville,int tom,
+			Date dateEmprunt, Date dateRetour) {
 		this();
 		this.numEmprunter = numEmprunter;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.rue = rue;
+		this.cp = cp;
+		this.ville = ville;
+		this.tom=tom;
 		this.dateEmprunt = dateEmprunt;
 		this.dateRetour = dateRetour;
+		
 	}
 
-	
-	
-	public Collection<EmpruntInforClient> getEmpruntInforClients() {
-		return empruntInforClients;
+	public int getTom() {
+		return tom;
 	}
 
-	public void setEmpruntInforClients(Collection<EmpruntInforClient> empruntInforClients) {
-		this.empruntInforClients = empruntInforClients;
+	public void setTom(int tom) {
+		this.tom = tom;
 	}
 
+	public Integer getId() {
+		return Id;
+	}
 
+	public void setId(Integer id) {
+		Id = id;
+	}
+
+	public String getRue() {
+		return rue;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public String getCp() {
+		return cp;
+	}
+
+	public void setCp(String cp) {
+		this.cp = cp;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 
 	public String getNumEmprunter() {
 		return numEmprunter;
+	}
+
+	public Collection<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Collection<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public void setNumEmprunter(String numEmprunter) {
 		this.numEmprunter = numEmprunter;
 	}
 
-	public Abonnement getAbonnement() {
-		return abonnement;
+	public Collection<Manga> getMangas() {
+		return mangas;
 	}
 
-	public void setAbonnement(Abonnement abonnement) {
-		this.abonnement = abonnement;
-	}
-
-	public Collection<LignEmprunt> getLignEmprunts() {
-		return lignEmprunts;
-	}
-
-	public void setLignEmprunts(Collection<LignEmprunt> lignEmprunts) {
-		this.lignEmprunts = lignEmprunts;
+	public void setMangas(Collection<Manga> mangas) {
+		this.mangas = mangas;
 	}
 
 	public String getNom() {
