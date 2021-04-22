@@ -14,6 +14,10 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Intege
 	
 	@Query("SELECT u FROM Utilisateur u WHERE u.identifiant = :identifiantUtilisateur")
 	public Optional<Utilisateur> chercherUtilisateurParidentifiant(String identifiantUtilisateur);
+	
+	
+	
+	
 	public Optional<Utilisateur> findByEmail(String email);
 	
 

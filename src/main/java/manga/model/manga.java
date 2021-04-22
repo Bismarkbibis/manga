@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Manga implements Serializable {
 
@@ -23,37 +25,43 @@ public class Manga implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String RESERVER = "Manga-Reserer";
+	public static final String DISPONIBLE = "Manga-Disponible";
+	public static final String PRETER = "Manga-PRETER";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
 
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
 	private String nom;
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
+	private String nomManagaStatus;
+	@Column(length = 50, nullable = false)
 	private String numSeri;
 	@Column(nullable = false)
 	private String numImage;
-	@Column(length = 100,nullable =  false)
+	@Column(length = 100, nullable = false)
 	private String titre;
-	@Column(length = 50,nullable =  false)
-	private float prix ;
-	@Column(length = 200,nullable =  false)
+	@Column(length = 50, nullable = false)
+	private float prix;
+	@Column(length = 200, nullable = false)
 	private String description;
 
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
 	private int nombrePage;
 
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
 	private int tom;
 
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
 	private String statut;
 
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateSortie;
 
-	@Column(length = 50,nullable =  false)
+	@Column(length = 50, nullable = false)
 	private int age;
 
 	// dependance
@@ -63,38 +71,47 @@ public class Manga implements Serializable {
 	private Edition edition;
 	@ManyToOne
 	private Auteur auteur;
+	@JsonIgnore
 	@ManyToOne
 	private Tva tva;
-	@ManyToOne
-	private MangaStatus mangaStatus;
 
 	@ManyToOne
 	private Langue langue;
-
+	@JsonIgnore
+	@ManyToOne
+	private Emprunter emprunter;
+	@ManyToOne
+	private MangaStatue mangaStatue;
+	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
 	private Collection<Commentaire> commentaires;
+	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
 	private Collection<Type> types;
-	@OneToMany(mappedBy = "manga")
-	private Collection<Abonnement> abonnements;
+	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
 	private Collection<LigeCommande> ligeCommandes;
+	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
 	private Collection<Actualiter> actualiters;
+	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
-	private Collection<CataloguePage> cataloguePages;
-
+	private Collection<Reservation> reservations;
+	@JsonIgnore
+	@OneToMany(mappedBy ="manga")
+	private Collection<Tom> toms;
+	
 	public Manga() {
 		commentaires = new ArrayList<>();
 		types = new ArrayList<>();
-		abonnements = new ArrayList<>();
 		ligeCommandes = new ArrayList<>();
 		actualiters = new ArrayList<>();
-		cataloguePages = new ArrayList<>();
+		reservations = new ArrayList<>();
+		toms = new ArrayList<>();
 	}
 
 	public Manga(String nom, String numSeri, String numImage, String titre, String description, int nombrePage, int tom,
-			String statut, Date dateSortie, int age,float prix ) {
+			String statut, Date dateSortie, int age, float prix, String nomManagaStatus) {
 		this();
 		this.nom = nom;
 		this.numSeri = numSeri;
@@ -105,8 +122,49 @@ public class Manga implements Serializable {
 		this.tom = tom;
 		this.statut = statut;
 		this.dateSortie = dateSortie;
-		this.prix=prix;
+		this.prix = prix;
+		this.nomManagaStatus = nomManagaStatus;
 		this.age = age;
+	}
+
+	public Collection<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Collection<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	public Collection<Tom> getToms() {
+		return toms;
+	}
+
+	public void setToms(Collection<Tom> toms) {
+		this.toms = toms;
+	}
+
+	public MangaStatue getMangaStatue() {
+		return mangaStatue;
+	}
+
+	public void setMangaStatue(MangaStatue mangaStatue) {
+		this.mangaStatue = mangaStatue;
+	}
+
+	public String getNomManagaStatus() {
+		return nomManagaStatus;
+	}
+
+	public void setNomManagaStatus(String nomManagaStatus) {
+		this.nomManagaStatus = nomManagaStatus;
+	}
+
+	public Emprunter getEmprunter() {
+		return emprunter;
+	}
+
+	public void setEmprunter(Emprunter emprunter) {
+		this.emprunter = emprunter;
 	}
 
 	public float getPrix() {
@@ -115,14 +173,6 @@ public class Manga implements Serializable {
 
 	public void setPrix(float prix) {
 		this.prix = prix;
-	}
-
-	public Collection<CataloguePage> getCataloguePages() {
-		return cataloguePages;
-	}
-
-	public void setCataloguePages(Collection<CataloguePage> cataloguePages) {
-		this.cataloguePages = cataloguePages;
 	}
 
 	public String getNom() {
@@ -212,6 +262,7 @@ public class Manga implements Serializable {
 	public void setGenre(Genre genre) {
 		this.genre = genre;
 	}
+
 	public Edition getEdition() {
 		return edition;
 	}
@@ -235,6 +286,7 @@ public class Manga implements Serializable {
 	public void setTva(Tva tva) {
 		this.tva = tva;
 	}
+
 	public Langue getLangue() {
 		return langue;
 	}
@@ -259,14 +311,6 @@ public class Manga implements Serializable {
 		this.types = types;
 	}
 
-	public Collection<Abonnement> getAbonnements() {
-		return abonnements;
-	}
-
-	public void setAbonnements(Collection<Abonnement> abonnements) {
-		this.abonnements = abonnements;
-	}
-
 	public Collection<LigeCommande> getLigeCommandes() {
 		return ligeCommandes;
 	}
@@ -283,15 +327,6 @@ public class Manga implements Serializable {
 		this.actualiters = actualiters;
 	}
 	
-	
-
-	public MangaStatus getMangaStatus() {
-		return mangaStatus;
-	}
-
-	public void setMangaStatus(MangaStatus mangaStatus) {
-		this.mangaStatus = mangaStatus;
-	}
 
 	@Override
 	public String toString() {

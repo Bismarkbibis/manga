@@ -18,8 +18,6 @@ public class AccessSecurityService {
 
 	@Autowired
 	private TokenRepository tokenRepository;
-
-	
 	public Optional<Token> findToken(HttpServletRequest request){
 		String valeurToken=request.getHeader("Authorization");
 		
