@@ -38,7 +38,7 @@ public class Commande  implements Serializable{
 
 	///dependance
 	@OneToMany(mappedBy = "commande")
-	private Collection<LigeCommande> ligeCommandes;
+	private Collection<LigneCommande> ligeCommandes;
 	@ManyToOne
 	private Adresse adresseLivraison;
 	@ManyToOne
@@ -58,11 +58,11 @@ public class Commande  implements Serializable{
 	}
 
 	
-	public Collection<LigeCommande> getLigeCommandes() {
+	public Collection<LigneCommande> getLigeCommandes() {
 		return ligeCommandes;
 	}
 
-	public void setLigeCommandes(Collection<LigeCommande> ligeCommandes) {
+	public void setLigeCommandes(Collection<LigneCommande> ligeCommandes) {
 		this.ligeCommandes = ligeCommandes;
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import manga.model.Actualiter;
 import manga.model.CataloguePage;
 import manga.model.Manga;
-
+import manga.model.MangaStatue;
 import manga.model.Role;
 import manga.model.Tom;
 import manga.model.Tva;
@@ -23,7 +23,7 @@ import manga.model.Utilisateur;
 import manga.repository.ActualiterRepository;
 import manga.repository.CataloguePageRepository;
 import manga.repository.MangaRepository;
-
+import manga.repository.MangaStatueRepository;
 import manga.repository.RoleRepository;
 import manga.repository.TomRepository;
 import manga.repository.TvaRepository;
@@ -45,7 +45,8 @@ public class MangaApplication {
 	private RoleRepository roleRepository;
 	@Autowired
 	private PasswordEncoderService passwordEncoderService;
-
+	@Autowired 
+	private MangaStatueRepository mangaStatueRepository;
 
 
 
@@ -86,24 +87,29 @@ public class MangaApplication {
 			tvaRepository.save(tva01);
 			tvaRepository.save(tva02);
 			
-	
+			MangaStatue mangaStatue01 = new MangaStatue(MangaStatue.DISPONIBLE);
+			mangaStatueRepository.save(mangaStatue01);
+			MangaStatue mangaStatue02 = new MangaStatue(MangaStatue.PRETER);
+			mangaStatueRepository.save(mangaStatue02);
+			MangaStatue mangaStatue03 = new MangaStatue(MangaStatue.RESERVER);
+			mangaStatueRepository.save(mangaStatue03);
 			
 			
 			
 			Manga manga = new Manga("Inazuma", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.PRETER);
 			manga.setTva(tva02);
-			
+			manga.setMangaStatue(mangaStatue01);
 			mangaRepository.save(manga);
 			Manga manga1 = new Manga("One piece", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
 			manga1.setTva(tva02);			
 			mangaRepository.save(manga1);
-			Manga manga2 = new Manga("Bibo", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
+			Manga manga2 = new Manga("Bibo","AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
 			manga2.setTva(tva02);
 			mangaRepository.save(manga2);
-			Manga manga3 = new Manga("Naza one", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
+			Manga manga3 = new Manga("Naza one","AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
 			manga3.setTva(tva02);
 			mangaRepository.save(manga3);
-			Manga mang4 = new Manga("Dragon ball z", "1133334", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
+			Manga mang4 = new Manga("Dragon ball z","1133334", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
 			mang4.setTva(tva02);
 			mangaRepository.save(mang4);
 			Manga manga5 = new Manga("Naruto", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233, 4, "dispoble", date, 12,24,Manga.DISPONIBLE);
@@ -117,9 +123,18 @@ public class MangaApplication {
 			mangaRepository.save(manga7);
 			
 			Tom tom = new Tom();
-			tom.setNom("L'arc de luffy");
+			tom.setNumImage("Manga.jpeg");
+			tom.setNom("One piece l'arc de luffy");
 			tom.setNumero(3);
+			tom.setTomStatue(Tom.DISPONIBLE);
 			tom.setManga(manga);
+			tom.setNumSeri("Azertyuio12");
+			tom.setDateDeSortie(date);
+			tom.setDescription("tom manga de l'annee");
+			tom.setManga(manga);
+			tom.setMangaStatue(mangaStatue01);
+			tom.setPrix(12);
+			tom.setTitre("One piece l'arc de luffy");
 			tomRepository.save(tom);
 			
 			

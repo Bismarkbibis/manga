@@ -9,61 +9,61 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class InsertTom {
 
-	private String nomTom;
+	private String nom;
+	private String manga;
+	private int numero;
+	private int nombrePage;
 
-	private int numeroTom;
-
-	private String nomManga;
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateSortir;
 
-	private int nombrePage;
+	private String numImage;
+	private String titre;
+	private float prix;
+	private String description;
 
-	public String getNomTom() {
-		return nomTom;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setNomTom(String nomTom) {
-		this.nomTom = nomTom;
+	public String getManga() {
+		return manga;
 	}
 
-	public int getNumeroTom() {
-		return numeroTom;
-	}
-
-	public void setNumeroTom(int numeroTom) {
-		this.numeroTom = numeroTom;
-	}
-
-	public String getNomManga() {
-		return nomManga;
-	}
-
-	public void setNomManga(String nomManga) {
-		this.nomManga = nomManga;
-	}
-
-	public Date getDateSortir() {
-		return dateSortir;
-	}
-
-	public void setDateSortir(Date dateSortir) {
-		this.dateSortir = dateSortir;
+	public int getNumero() {
+		return numero;
 	}
 
 	public int getNombrePage() {
 		return nombrePage;
 	}
 
-	public void setNombrePage(int nombrePage) {
-		this.nombrePage = nombrePage;
+	public Date getDateSortir() {
+		return dateSortir;
+	}
+
+	public String getNumImage() {
+		return numImage;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public float getPrix() {
+		return prix;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	@Override
 	public String toString() {
-		return "InsertTom [nomTom=" + nomTom + ", numeroTom=" + numeroTom + ", nomManga=" + nomManga + ", dateSortir="
-				+ dateSortir + "]";
+		return "InsertTom [nom=" + nom + ", manga=" + manga + ", numero=" + numero + ", nombrePage=" + nombrePage
+				+ ", dateSortir=" + dateSortir + ", numImage=" + numImage + ", titre=" + titre + ", prix=" + prix
+				+ ", description=" + description + "]";
 	}
 
 }

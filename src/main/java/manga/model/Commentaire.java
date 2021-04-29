@@ -40,6 +40,8 @@ public class Commentaire implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private Utilisateur utilisateur;
+	@ManyToOne
+	private Tom tom;
 	@JsonIgnore
 	@ManyToOne
 	private Manga manga;
@@ -51,6 +53,14 @@ public class Commentaire implements Serializable {
 		this.avis = avis;
 		this.identifiant = identifiant;
 		this.cmmDate = cmmDate;
+	}
+
+	public Tom getTom() {
+		return tom;
+	}
+
+	public void setTom(Tom tom) {
+		this.tom = tom;
 	}
 
 	public String getIdentifiant() {

@@ -19,8 +19,6 @@ public class InsertManga {
 	private int nombrePage;
 
 	private String imageNum;
-	
-	private int tom;
 
 	private String auteur;
 
@@ -94,14 +92,6 @@ public class InsertManga {
 
 	public void setImageNum(String imageNum) {
 		this.imageNum = imageNum;
-	}
-
-	public int getTom() {
-		return tom;
-	}
-
-	public void setTom(int tom) {
-		this.tom = tom;
 	}
 
 	public String getAuteur() {

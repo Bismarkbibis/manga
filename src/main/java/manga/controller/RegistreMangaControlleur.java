@@ -37,7 +37,7 @@ public class RegistreMangaControlleur {
 		if (userAdmin) {
 			try {
 			
-				Manga manga = admService.insertMangaAdmin(insertManga.getNumSeri(),insertManga.getNom(),insertManga.getDescription(),insertManga.getTitre(),insertManga.getNombrePage(),insertManga.getImageNum(),insertManga.getTom(),insertManga.getAuteur(),insertManga.getGenre(),insertManga.getStatut(),insertManga.getDateSortieManag(),insertManga.getLangue()
+				Manga manga = admService.insertMangaAdmin(insertManga.getNumSeri(),insertManga.getNom(),insertManga.getDescription(),insertManga.getTitre(),insertManga.getNombrePage(),insertManga.getImageNum(),insertManga.getAuteur(),insertManga.getGenre(),insertManga.getStatut(),insertManga.getDateSortieManag(),insertManga.getLangue()
 						, insertManga.getEdition(),insertManga.getAge(),insertManga.getDestination(),insertManga.getTva(), insertManga.getPrix());
 				
 				System.out.println(" token recu>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  " + valueToken);

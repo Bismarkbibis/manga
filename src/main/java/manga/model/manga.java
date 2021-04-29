@@ -90,7 +90,7 @@ public class Manga implements Serializable {
 	private Collection<Type> types;
 	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
-	private Collection<LigeCommande> ligeCommandes;
+	private Collection<LigneCommande> ligeCommandes;
 	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
 	private Collection<Actualiter> actualiters;
@@ -311,11 +311,11 @@ public class Manga implements Serializable {
 		this.types = types;
 	}
 
-	public Collection<LigeCommande> getLigeCommandes() {
+	public Collection<LigneCommande> getLigeCommandes() {
 		return ligeCommandes;
 	}
 
-	public void setLigeCommandes(Collection<LigeCommande> ligeCommandes) {
+	public void setLigeCommandes(Collection<LigneCommande> ligeCommandes) {
 		this.ligeCommandes = ligeCommandes;
 	}
 

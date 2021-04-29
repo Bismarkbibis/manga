@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import manga.Outile.CustomedException;
 import manga.model.Emprunter;
 import manga.model.Manga;
-import manga.model.MangaStatue;
 import manga.model.Reservation;
 import manga.model.Tom;
 import manga.model.Utilisateur;
@@ -26,9 +25,9 @@ import manga.repository.TomRepository;
 
 @Service
 public class EmprunterService {
+	
 	@Autowired
 	private MangaRepository mangaRepository;
-
 	@Autowired
 	private EmprunterRepository emprunterRepository;
 	@Autowired
@@ -92,19 +91,16 @@ public class EmprunterService {
 		return null;
 	}
 
-
-
-	public Emprunter EmprunterManga(Utilisateur utilisateur, int idMaanga, int tom, String rue,
-			String cp, String ville) throws CustomedException {
+	public Emprunter EmprunterTom(Utilisateur utilisateur, int idTom,String nom,String prenom, String rue,String cp, String ville) throws CustomedException {
 		HashMap<String, String> erreur = new HashMap<>();
-		Optional<Manga> manga01 = mangaRepository.findById(idMaanga);
-		Optional<Tom> tomManga = tomRepository.findTomById(tom);
+		
+//		Optional<Manga> manga01 = mangaRepository.findTomByNomManga(idTom);
+		Optional<Tom> tomManga = tomRepository.findById(idTom);
 
 		if (utilisateur.getNombreEmprunter() >= MAX_EMPRUNTER) {
 			erreur.put("Depassement", "Le nombre manga emprunte est depasser");
-			return null;
 		}
-		System.out.println(">>>>>><<<<>>>>>>>><<<<<<   " + utilisateur.getNombreEmprunter() + ">>>>>>>>>>>>>>>>>>>>>");
+
 
 //		boolean compte = false;
 //		if (utilisateur.getPenaliter() ==compte ) {
@@ -112,49 +108,45 @@ public class EmprunterService {
 //		}
 
 // verifier si le compte est bloquer ou pas
-		
-			if (manga01.isPresent()) {
-				Manga manga = manga01.get();
-				System.out.println("<<<<<<<<<<<<<<<<<<<"+manga);
-				if (manga.getNomManagaStatus().equals(MangaStatue.DISPONIBLE)) {
-					System.out.println("" + manga);
-					Emprunter emprunter = new Emprunter();
-					emprunter.setUtilisateur(utilisateur);
-					emprunter.setNom(utilisateur.getNom());
-					emprunter.setPrenom(utilisateur.getPrenom());
-					emprunter.setNumEmprunter(numEmprunt());
-					if (tomManga.isPresent()) {
-						Tom tom2 = tomManga.get();
-						tom2.setManga(manga);
-					} else {
-						// message
-						return null;
-					}
-					emprunter.setCp(cp);
-					emprunter.setRue(rue);
-					emprunter.setVille(ville);
-					// date de emprunt
-					Date date01 = new Date();
-					emprunter.setDateEmprunt(date01);
-					// date de retour
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(date01);
-					calendar.add(Calendar.DATE, 9);
-					date01 = calendar.getTime();
-					emprunter.setDateRetour(date01);
+		System.out.println("<<<<<<<<<<<<<<<<<<<SQSSSSSSQQSQS"+tomManga);
+			if (tomManga.isPresent()) {
+				
+				System.out.println("<<<<<<<<<<<<<<<<<<<SQSSSSSSQQSQS"+tomManga);
+				Tom tom = tomManga.get();
+				if(tom.getTomStatue().equals(Tom.DISPONIBLE)) {
+					
+					System.out.println("<<<<<<<<QS"+tomManga);
+						Emprunter emprunter = new Emprunter();
+						emprunter.setUtilisateur(utilisateur);
+						emprunter.setNom(utilisateur.getNom());
+						emprunter.setPrenom(utilisateur.getPrenom());
+						emprunter.setNumEmprunter(numEmprunt());
+						emprunter.setCp(cp);
+						emprunter.setRue(rue);
+						emprunter.setVille(ville);
+						
+						// date de emprunt
+						Date date01 = new Date();
+						emprunter.setDateEmprunt(date01);
+						// date de retour
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(date01);
+						calendar.add(Calendar.DATE, 9);
+						date01 = calendar.getTime();
+						emprunter.setDateRetour(date01);
+						
+						tom.setEmprunter(emprunter);
+//						tom.setManga(manga);
 
-					manga.setEmprunter(emprunter);
-					manga.setTom(tom);
-					// user nombre emprunter
-					utilisateur.setNombreEmprunter(utilisateur.getNombreEmprunter() + 1);
-					manga.setNomManagaStatus(Manga.PRETER);
-
-					emprunterRepository.save(emprunter);
-					return emprunter;
+// 						user nombre emprunter
+						utilisateur.setNombreEmprunter(utilisateur.getNombreEmprunter() + 1);
+						tom.setTomStatue(Tom.PRETER);
+						emprunterRepository.save(emprunter);
+						return emprunter;
 				}
 			} else {
 				// si livre pas disponible reserver
-				erreur.put("manga emprunter", "manga deja emprunter");
+				erreur.put("Tom Emprunter", "tom deja emprunter");
 			}
 
 		if (!erreur.isEmpty()) {
@@ -163,5 +155,73 @@ public class EmprunterService {
 		}
 		return null;
 	}
+
+//	public Emprunter EmprunterManga(Utilisateur utilisateur, int idMaanga, int tom, String rue,String cp, String ville) throws CustomedException {
+//		HashMap<String, String> erreur = new HashMap<>();
+//		Optional<Manga> manga01 = mangaRepository.findById(idMaanga);
+//		Optional<Tom> tomManga = tomRepository.findTomById(tom);
+//
+//		if (utilisateur.getNombreEmprunter() >= MAX_EMPRUNTER) {
+//			erreur.put("Depassement", "Le nombre manga emprunte est depasser");
+//		}
+//		System.out.println(">>>>>><<<<>>>>>>>><<<<<<   " + utilisateur.getNombreEmprunter() + ">>>>>>>>>>>>>>>>>>>>>");
+//
+////		boolean compte = false;
+////		if (utilisateur.getPenaliter() ==compte ) {
+////			erreur.put("compte bloquer", "votre compte est bloquer veuiller vous renseigner");
+////		}
+//
+//// verifier si le compte est bloquer ou pas
+//		
+//			if (manga01.isPresent()) {
+//				Manga manga = manga01.get();
+//				System.out.println("<<<<<<<<<<<<<<<<<<<BISMMMMMM"+manga);
+//				//String disponible = MangaStatue.DISPONIBLE;
+//				if (manga.getNomManagaStatus().equals(Manga.DISPONIBLE)) {
+//					System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmcdddddddc" + manga);
+//					Emprunter emprunter = new Emprunter();
+//					emprunter.setUtilisateur(utilisateur);
+//					emprunter.setNom(utilisateur.getNom());
+//					emprunter.setPrenom(utilisateur.getPrenom());
+//					emprunter.setNumEmprunter(numEmprunt());
+//					if (tomManga.isPresent()) {
+//						Tom tom2 = tomManga.get();
+//						tom2.setManga(manga);
+//					} else {
+//					erreur.put("Emprunter", "tom deja emprunter");
+//					}
+//					emprunter.setCp(cp);
+//					emprunter.setRue(rue);
+//					emprunter.setVille(ville);
+//					// date de emprunt
+//					Date date01 = new Date();
+//					emprunter.setDateEmprunt(date01);
+//					// date de retour
+//					Calendar calendar = Calendar.getInstance();
+//					calendar.setTime(date01);
+//					calendar.add(Calendar.DATE, 9);
+//					date01 = calendar.getTime();
+//					emprunter.setDateRetour(date01);
+//
+//					manga.setEmprunter(emprunter);
+//					manga.setTom(tom);
+//					// user nombre emprunter
+//					utilisateur.setNombreEmprunter(utilisateur.getNombreEmprunter() + 1);
+//					manga.setNomManagaStatus(Manga.PRETER);
+//
+//					emprunterRepository.save(emprunter);
+//					return emprunter;
+//				}
+//			} else {
+//				// si livre pas disponible reserver
+//				erreur.put("manga emprunter", "manga deja emprunter");
+//			}
+//
+//		if (!erreur.isEmpty()) {
+//			CustomedException ex = new CustomedException(erreur, "Echec DE L'emprunt");
+//			throw ex;
+//		}
+//		return null;
+//	}
 
 }
