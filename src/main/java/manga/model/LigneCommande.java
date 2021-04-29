@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class LigeCommande implements Serializable{
+public class LigneCommande implements Serializable{
 
 	/**
 	 * 
@@ -33,11 +33,11 @@ public class LigeCommande implements Serializable{
 	@ManyToOne
 	private Manga manga;
 
-	public LigeCommande() {
+	public LigneCommande() {
 		
 	}
 
-	public LigeCommande(float prixHT, float tauxTva, int qte) {
+	public LigneCommande(float prixHT, float tauxTva, int qte) {
 		
 		this.prixHT = prixHT;
 		this.tauxTva = tauxTva;

@@ -35,7 +35,7 @@ public class EmprunteControlleur {
 		Utilisateur utilisateur = accessSecurityService.findUserByToken(request);
 		if (utilisateur != null) {
 			try {
-				Emprunter emprunter = emprunterService.EmprunterManga(utilisateur, clientEmprunter.getIdManga(), clientEmprunter.getTom(), clientEmprunter.getRue(), clientEmprunter.getCp(), clientEmprunter.getVille());
+				Emprunter emprunter = emprunterService.EmprunterTom(utilisateur, clientEmprunter.getTomNom(), clientEmprunter.getNom(), clientEmprunter.getPrenom(), clientEmprunter.getRue(), clientEmprunter.getCp(), clientEmprunter.getVille());
 				System.out.println("<<<<<<<<<<<<<<<<<<<"+emprunter);
 				return ResponseEntity.ok(emprunter);
 			} catch (Exception e) {

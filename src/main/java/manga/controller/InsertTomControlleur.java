@@ -34,8 +34,9 @@ public class InsertTomControlleur {
 
 		if (admin) {
 			try {
-				Tom tom2 = adminService.insertTomManga(utilisateur, tom.getNomTom(), tom.getNomManga(),
-						tom.getNumeroTom(), tom.getNombrePage(), tom.getDateSortir());
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<"+admin);
+				Tom tom2 = adminService.insertTomManga(utilisateur, tom.getNom(), tom.getManga(),tom.getNumero(),tom.getNombrePage(), tom.getDateSortir(), tom.getNumImage(), tom.getTitre(),tom.getPrix(), tom.getDescription());
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+tom2);
 				return ResponseEntity.ok(tom2);
 			} catch (CustomedException e) {
 				e.printStackTrace();

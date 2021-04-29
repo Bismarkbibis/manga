@@ -32,15 +32,28 @@ public class MangaStatue implements Serializable{
 	private String nom;
 	
 	@OneToMany(mappedBy = "mangaStatue")
+	private Collection<Tom> toms;
+	
+	@OneToMany(mappedBy = "mangaStatue")
 	private Collection<Manga> manga;
 
 	public MangaStatue() {
 		manga = new ArrayList<>();
+		toms = new ArrayList<>();
 	}
 
 	public MangaStatue(String nom) {
-		super();
+		this();
 		this.nom = nom;
+	}
+ 
+	
+	public Collection<Tom> getToms() {
+		return toms;
+	}
+
+	public void setToms(Collection<Tom> toms) {
+		this.toms = toms;
 	}
 
 	public String getNom() {

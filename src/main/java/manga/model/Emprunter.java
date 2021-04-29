@@ -29,10 +29,6 @@ public class Emprunter implements Serializable {
 
 	@Column(nullable = true, unique = false)
 	private String numEmprunter;
-	
-	@Column(length = 50)
-	private int tom;
-	
 	@Column(length = 50)
 	private String nom;
 
@@ -57,16 +53,20 @@ public class Emprunter implements Serializable {
 
 	@OneToMany(mappedBy = "emprunter")
 	private Collection<Manga> mangas;
-	
+
 	@OneToMany(mappedBy = "emprunter")
 	private Collection<Reservation> reservations;
-	
+
+	@OneToMany(mappedBy = "emprunter")
+	private Collection<Tom> toms;
+
 	public Emprunter() {
 		mangas = new ArrayList<>();
 		reservations = new ArrayList<>();
+		toms = new ArrayList<>();
 	}
 
-	public Emprunter(String numEmprunter, String nom, String prenom, String rue, String cp, String ville,int tom,
+	public Emprunter(String numEmprunter, String nom, String prenom, String rue, String cp, String ville,
 			Date dateEmprunt, Date dateRetour) {
 		this();
 		this.numEmprunter = numEmprunter;
@@ -75,18 +75,10 @@ public class Emprunter implements Serializable {
 		this.rue = rue;
 		this.cp = cp;
 		this.ville = ville;
-		this.tom=tom;
+
 		this.dateEmprunt = dateEmprunt;
 		this.dateRetour = dateRetour;
-		
-	}
 
-	public int getTom() {
-		return tom;
-	}
-
-	public void setTom(int tom) {
-		this.tom = tom;
 	}
 
 	public Integer getId() {
@@ -185,10 +177,17 @@ public class Emprunter implements Serializable {
 		this.dateRetour = dateRetour;
 	}
 
+	public Collection<Tom> getToms() {
+		return toms;
+	}
+
+	public void setToms(Collection<Tom> toms) {
+		this.toms = toms;
+	}
+
 	@Override
 	public String toString() {
 		return "Emprunter [nom=" + nom + ", prenom=" + prenom + ", dateEmprunt=" + dateEmprunt + ", dateRetour="
 				+ dateRetour + "]";
 	}
-
 }

@@ -1,5 +1,6 @@
 package manga.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,11 @@ public interface TomRepository extends JpaRepository<Tom, Integer> {
 	
 	@Query("SELECT t FROM Tom t WHERE t.nom=:paraNom")
 	public Optional<Tom> findTomByNom (String paraNom);
+	
+	// remonter tout les tom qui ont pour nom manga == one pice par exemple
+	@Query("SELECT t FROM Tom t join t.manga m WHERE m.id = :paraNomTom")
+	public List<Tom> findTomByIdManga (int paraNomTom);
+	
 	
 
 }
