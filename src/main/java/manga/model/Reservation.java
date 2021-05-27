@@ -37,9 +37,7 @@ public class Reservation implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private Manga manga;
-	@JsonIgnore
-	@ManyToOne
-	private Emprunter emprunter;
+
 	
 	@JsonIgnore
 	@ManyToOne
@@ -97,16 +95,6 @@ public class Reservation implements Serializable {
 	public void setManga(Manga manga) {
 		this.manga = manga;
 	}
-
-	public Emprunter getEmprunter() {
-		return emprunter;
-	}
-
-	public void setEmprunter(Emprunter emprunter) {
-		this.emprunter = emprunter;
-	}
-
-	
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;

@@ -5,7 +5,7 @@ public class RegistreRentrant {
 	private String nom;
 	private String prenom;
 	private String identifiant;
-	private String dateNaissance;
+	private int age;
 	private String numero;
 	private String mdp;
 	private String mdp2;
@@ -17,10 +17,6 @@ public class RegistreRentrant {
 
 	public void setNumero(String numero) {
 		this.numero = numero;
-	}
-
-	public RegistreRentrant() {
-		super();
 	}
 
 	public String getNom() {
@@ -47,16 +43,26 @@ public class RegistreRentrant {
 		this.identifiant = identifiant;
 	}
 
-	public String getDateNaissance() {
-		return dateNaissance;
-	}
-
-	public void setDateNaissance(String dateNaissance) {
-		this.dateNaissance = dateNaissance;
-	}
+//	public String getDateNaissance() {
+//		return dateNaissance;
+//	}
+//
+//	public void setDateNaissance(String dateNaissance) {
+//		this.dateNaissance = dateNaissance;
+//	}
+	
+	
 
 	public String getMdp() {
 		return mdp;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public void setMdp(String mdp) {
@@ -81,10 +87,11 @@ public class RegistreRentrant {
 
 	@Override
 	public String toString() {
-		return "RegistreRentrant [nom=" + nom + ", prenom=" + prenom + ", identifiant=" + identifiant
-				+ ", dateNaissance=" + dateNaissance + ", numero=" + numero + ", email=" + email + "]";
+		return "RegistreRentrant [nom=" + nom + ", prenom=" + prenom + ", identifiant=" + identifiant + ", age=" + age
+				+ ", numero=" + numero + ", email=" + email + "]";
 	}
 
+	
 
 
 }

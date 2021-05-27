@@ -55,14 +55,10 @@ public class Emprunter implements Serializable {
 	private Collection<Manga> mangas;
 
 	@OneToMany(mappedBy = "emprunter")
-	private Collection<Reservation> reservations;
-
-	@OneToMany(mappedBy = "emprunter")
 	private Collection<Tom> toms;
 
 	public Emprunter() {
 		mangas = new ArrayList<>();
-		reservations = new ArrayList<>();
 		toms = new ArrayList<>();
 	}
 
@@ -123,14 +119,6 @@ public class Emprunter implements Serializable {
 
 	public String getNumEmprunter() {
 		return numEmprunter;
-	}
-
-	public Collection<Reservation> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(Collection<Reservation> reservations) {
-		this.reservations = reservations;
 	}
 
 	public void setNumEmprunter(String numEmprunter) {

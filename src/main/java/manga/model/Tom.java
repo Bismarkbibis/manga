@@ -23,9 +23,7 @@ public class Tom implements Serializable {
 	/**
 	 * 
 	 */
-	public static final String RESERVER = "Manga-Reserer";
-	public static final String DISPONIBLE = "Manga-Disponible";
-	public static final String PRETER = "Manga-PRETER";
+
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -39,7 +37,7 @@ public class Tom implements Serializable {
 	@Column(length = 50)
 	private int numero;
 	@Column(length = 50)
-	private String tomStatue;
+	private boolean Statut = false;
 	@Column(length = 50)
 	private String numSeri;
 	@Column(length = 100)
@@ -56,8 +54,6 @@ public class Tom implements Serializable {
 	private Manga manga;
 	@JsonIgnore
 	@ManyToOne
-	private MangaStatue mangaStatue;
-	@ManyToOne
 	private Emprunter emprunter;
 	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
@@ -67,13 +63,13 @@ public class Tom implements Serializable {
 		commentaires = new ArrayList<>();
 	}
 
-	public Tom(String nom, String numImage, int numero, String nomManagaStatus, String numSeri, String titre,
+	public Tom(String nom, String numImage, int numero, boolean Statut, String numSeri, String titre,
 			float prix, String description, Date dateDeSortie) {
 		this();
 		this.nom = nom;
 		this.numImage = numImage;
 		this.numero = numero;
-		this.tomStatue = nomManagaStatus;
+		this.Statut = Statut;
 		this.numSeri = numSeri;
 		this.titre = titre;
 		this.prix = prix;
@@ -81,12 +77,14 @@ public class Tom implements Serializable {
 		this.dateDeSortie = dateDeSortie;
 	}
 
-	public String getTomStatue() {
-		return tomStatue;
+
+
+	public boolean getStatut() {
+		return Statut;
 	}
 
-	public void setTomStatue(String tomStatue) {
-		this.tomStatue = tomStatue;
+	public void setStatut(boolean statut) {
+		Statut = statut;
 	}
 
 	public String getNumSeri() {
@@ -121,13 +119,6 @@ public class Tom implements Serializable {
 		this.description = description;
 	}
 
-	public MangaStatue getMangaStatue() {
-		return mangaStatue;
-	}
-
-	public void setMangaStatue(MangaStatue mangaStatue) {
-		this.mangaStatue = mangaStatue;
-	}
 
 	public Collection<Commentaire> getCommentaires() {
 		return commentaires;

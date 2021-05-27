@@ -25,9 +25,7 @@ public class Manga implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String RESERVER = "Manga-Reserer";
-	public static final String DISPONIBLE = "Manga-Disponible";
-	public static final String PRETER = "Manga-PRETER";
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +33,7 @@ public class Manga implements Serializable {
 
 	@Column(length = 50, nullable = false)
 	private String nom;
-	@Column(length = 50, nullable = false)
-	private String nomManagaStatus;
+
 	@Column(length = 50, nullable = false)
 	private String numSeri;
 	@Column(nullable = false)
@@ -54,8 +51,8 @@ public class Manga implements Serializable {
 	@Column(length = 50, nullable = false)
 	private int tom;
 
-	@Column(length = 50, nullable = false)
-	private String statut;
+	@Column(nullable = false)
+	private boolean statut = false;
 
 	@Column(length = 50, nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -80,8 +77,6 @@ public class Manga implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private Emprunter emprunter;
-	@ManyToOne
-	private MangaStatue mangaStatue;
 	@JsonIgnore
 	@OneToMany(mappedBy = "manga")
 	private Collection<Commentaire> commentaires;
@@ -111,7 +106,7 @@ public class Manga implements Serializable {
 	}
 
 	public Manga(String nom, String numSeri, String numImage, String titre, String description, int nombrePage, int tom,
-			String statut, Date dateSortie, int age, float prix, String nomManagaStatus) {
+			boolean statut, Date dateSortie, int age, float prix) {
 		this();
 		this.nom = nom;
 		this.numSeri = numSeri;
@@ -123,7 +118,6 @@ public class Manga implements Serializable {
 		this.statut = statut;
 		this.dateSortie = dateSortie;
 		this.prix = prix;
-		this.nomManagaStatus = nomManagaStatus;
 		this.age = age;
 	}
 
@@ -141,22 +135,6 @@ public class Manga implements Serializable {
 
 	public void setToms(Collection<Tom> toms) {
 		this.toms = toms;
-	}
-
-	public MangaStatue getMangaStatue() {
-		return mangaStatue;
-	}
-
-	public void setMangaStatue(MangaStatue mangaStatue) {
-		this.mangaStatue = mangaStatue;
-	}
-
-	public String getNomManagaStatus() {
-		return nomManagaStatus;
-	}
-
-	public void setNomManagaStatus(String nomManagaStatus) {
-		this.nomManagaStatus = nomManagaStatus;
 	}
 
 	public Emprunter getEmprunter() {
@@ -231,11 +209,13 @@ public class Manga implements Serializable {
 		this.tom = tom;
 	}
 
-	public String getStatut() {
+
+
+	public boolean isStatut() {
 		return statut;
 	}
 
-	public void setStatut(String statut) {
+	public void setStatut(boolean statut) {
 		this.statut = statut;
 	}
 
