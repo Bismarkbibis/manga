@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -43,11 +44,10 @@ public class Utilisateur implements Serializable {
 
 	@Column(length = 100, unique = true)
 	private String email;
-	@Column(length = 50, nullable = false)
-	private String dateNaissance;
+//	@Column(length = 50)
+//	private String dateNaissance;
 	@Column(length = 50)
 	int age;
-
 	@Column(length = 50)
 	private String numerotel;
 	@JsonIgnore
@@ -60,8 +60,7 @@ public class Utilisateur implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private Role role;
-	@ManyToOne
-	private Penaliter penaliter;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Token> tokens;
@@ -84,7 +83,7 @@ public class Utilisateur implements Serializable {
 		tokens = new ArrayList<>();
 	}
 
-	public Utilisateur(String identifiant, String nom, String prenom, String email, String dateNaissance, int age,
+	public Utilisateur(String identifiant, String nom, String prenom, String email,  int age,
 			String numerotel, String mdp,boolean compteStatue,int nombreEmprunter) {
 		this();
 
@@ -92,7 +91,7 @@ public class Utilisateur implements Serializable {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.dateNaissance = dateNaissance;
+//		this.dateNaissance = dateNaissance;
 		this.age = age;
 		this.numerotel = numerotel;
 		this.mdp = mdp;
@@ -208,13 +207,13 @@ public class Utilisateur implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getDateNaissance() {
-		return dateNaissance;
-	}
-
-	public void setDateNaissance(String dateNaissance) {
-		this.dateNaissance = dateNaissance;
-	}
+//	public String getDateNaissance() {
+//		return dateNaissance;
+//	}
+//
+//	public void setDateNaissance(String dateNaissance) {
+//		this.dateNaissance = dateNaissance;
+//	}
 
 	public boolean getCompteStatue() {
 		return compteStatue;
@@ -232,13 +231,6 @@ public class Utilisateur implements Serializable {
 		this.nombreEmprunter = nombreEmprunter;
 	}
 
-	public Penaliter getPenaliter() {
-		return penaliter;
-	}
-
-	public void setPenaliter(Penaliter penaliter) {
-		this.penaliter = penaliter;
-	}
 
 	public Collection<Reservation> getReservations() {
 		return reservations;
@@ -251,11 +243,14 @@ public class Utilisateur implements Serializable {
 	@Override
 	public String toString() {
 		return "Utilisateur [id=" + id + ", identifiant=" + identifiant + ", compteStatue=" + compteStatue + ", nom="
-				+ nom + ", prenom=" + prenom + ", email=" + email + ", dateNaissance=" + dateNaissance + ", age=" + age
-				+ ", numerotel=" + numerotel + ", nombreEmprunter=" + nombreEmprunter + ", role=" + role
-				+ ", penaliter=" + penaliter + ", tokens=" + tokens + ", commentaires=" + commentaires + ", adresses="
-				+ adresses + ", emprunters=" + emprunters + "]";
+				+ nom + ", prenom=" + prenom + ", email=" + email + ", age=" + age + ", numerotel=" + numerotel
+				+ ", nombreEmprunter=" + nombreEmprunter + ", role=" + role + ", commentaires=" + commentaires
+				+ ", adresses=" + adresses + ", emprunters=" + emprunters + ", reservations=" + reservations + "]";
 	}
+
+
+
+
 	
 	
 	

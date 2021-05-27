@@ -16,7 +16,7 @@ import manga.model.Edition;
 import manga.model.Genre;
 import manga.model.Langue;
 import manga.model.Manga;
-import manga.model.MangaStatue;
+
 import manga.model.Tom;
 import manga.model.Tva;
 import manga.model.Utilisateur;
@@ -26,7 +26,6 @@ import manga.repository.EditionRepository;
 import manga.repository.GenreRepository;
 import manga.repository.LangueRepository;
 import manga.repository.MangaRepository;
-import manga.repository.MangaStatueRepository;
 import manga.repository.TomRepository;
 import manga.repository.TvaRepository;
 
@@ -49,8 +48,7 @@ public class AdminService {
 	private CataloguePageRepository cataloguePageRepository;
 	@Autowired
 	private TomRepository tomRepository;
-	@Autowired
-	private MangaStatueRepository mangaStatueRepository;
+
 
 	public List<Manga> mangas() {
 		List<Manga> mangas = mangaRepository.findAll();
@@ -74,6 +72,8 @@ public class AdminService {
 		return nume;
 	}
 
+	
+// insertion d'un manga
 	public Manga insertMangaAdmin(String numSeri, String nom, String description, String titre, int nombrePage,
 			String imageNum,String auteur, String genre, String statut, Date dateSortieManag, String langue,
 			String edition, int age, int destination, int tva, float prix) throws CustomedException {
@@ -101,11 +101,8 @@ public class AdminService {
 			manga01.setTitre(titre);
 			manga01.setAge(age);
 			manga01.setPrix(prix);
-			manga01.setStatut(statut);
+			manga01.setStatut(true);
 			manga01.setTva(tva01.get());
-			// statue
-			
-			manga01.setNomManagaStatus(Manga.DISPONIBLE);
 
 			// Auteur
 			if (auteur01.isPresent()) {
@@ -167,50 +164,38 @@ public class AdminService {
 		}
 	}
 
-	public Tom insertTomManga(Utilisateur utilisateur, String nomTom, String nomManga, int numeroTom, int nombrePage,
+	public Tom insertTomManga(Utilisateur utilisateur, String nom, String Manga, int numero, int nombrePage,
 			Date dateSortir,String numImage,String titre,float prix,String description) throws CustomedException {
 		HashMap<String, String> erreurInsertTom = new HashMap<>();
 
-		Optional<Manga> manga = mangaRepository.findMangaByNom(nomManga);
-		Optional<Tom> tom = tomRepository.findTomByNom(nomTom);
+		Optional<Manga> manga = mangaRepository.findMangaByNom(Manga);
+		Optional<Tom> tom = tomRepository.findTomByNom(nom);
 		
 		if (manga.isPresent()) {
 			Manga manga2 = manga.get();
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>><" + manga2.getNom());
 			
 			if (tom.isPresent()) {
-				Tom t = tom.get();
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+t);
 				erreurInsertTom.put("Deja existant", "Le tom que vous essayer de inserer est deja existant ");
 			} else {
-				Tom nvTom = new Tom();
-				nvTom.setNom(nomTom);
-				nvTom.setNumSeri(NumeroSeri());
-				nvTom.setNumero(numeroTom);
-				nvTom.setNumSeri(NumeroSeri());
-				nvTom.setNumImage(numImage);
-				nvTom.setDateDeSortie(dateSortir);
-				nvTom.setDescription(description);
-				nvTom.setTitre(titre);
-				nvTom.setPrix(prix);
-				
-				// statue du tom
-				String disponible = "Manga-Disponible";
-				Optional<MangaStatue> dispo = mangaStatueRepository.findMangaStatuNom(disponible);
-				MangaStatue TomStatue =dispo.get();
-				nvTom.setMangaStatue(TomStatue);
-				// statue terminer 
-				
-				nvTom.setManga(manga2);
-				tomRepository.save(nvTom);
-				return nvTom;
+				Tom tom01 = new Tom();
+				tom01.setNom(nom);
+				tom01.setNumero(numero);
+				tom01.setNumSeri(NumeroSeri());
+				tom01.setNumImage(numImage);
+				tom01.setDateDeSortie(dateSortir);
+				tom01.setDescription(description);
+				tom01.setTitre(titre);
+				tom01.setPrix(prix);
+				tom01.setStatut(true);
+
+				tom01.setManga(manga2);
+				tomRepository.save(tom01);
+				return tom01;
 			}
 		} else {
 			erreurInsertTom.put("Le manga n'existe pas", "Le manga que vous essayer de inserer un tom n'existe pas ");
 		}
-		if (erreurInsertTom.isEmpty()) {
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<"+erreurInsertTom+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		}else {
+		if (!erreurInsertTom.isEmpty()) {
 			CustomedException exception = new CustomedException(erreurInsertTom);
 			throw exception;
 		}
@@ -218,4 +203,6 @@ public class AdminService {
 		return null;
 
 	}
+	
+	
 }

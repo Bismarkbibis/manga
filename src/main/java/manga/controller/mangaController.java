@@ -22,15 +22,22 @@ public class mangaController {
 	@Autowired
 	private MangaService mangaService;
 	
-	@GetMapping("/mangas")
+	@GetMapping(value="/mangas")
 	private List<Actualiter> getALLL(){
 		List<Actualiter> mangas=mangaService.getAllActu();
 		return mangas;
 	}
-	@GetMapping("/manga/{nom}")
+	@GetMapping(value="/manga/{nom}")
 	public ResponseEntity<List<Manga>> getMangaByName(@PathVariable("nom") String nomManga){
 		List<Manga> manga= mangaService.getMangaByName(nomManga);
 		return ResponseEntity.ok(manga);
 	}
-	
+	@GetMapping(value="/manga/{langue}")
+	public ResponseEntity<List<Manga>> getMangaByLangue(@PathVariable("langue") int langueManga){
+		System.out.println("sdddddddddddddddddd");
+		List<Manga> mangas = mangaService.selectMangaByLangue(langueManga);
+		return ResponseEntity.ok(mangas);
+		
+	}
+
 }

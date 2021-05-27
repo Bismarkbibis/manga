@@ -28,12 +28,12 @@ public class PanierControlleur {
 	private AccessSecurityService accessSecurityService;
 	
 	@PostMapping("/commande")
-	public ResponseEntity<Commande> clientOrder(HttpServletRequest request,@RequestBody List<HashMap<String, Integer>> panier, @RequestBody AdressClient adressClient) {
+	public ResponseEntity<Commande> clientOrder(HttpServletRequest request,@RequestBody List<HashMap<Integer, Integer>> panier, @RequestBody AdressClient Client) {
 		
 		Utilisateur utilisateur = accessSecurityService.findUserByToken(request);
-		
 		if (!(utilisateur==null)) {
-		   Commande commande = panierService.creatOrder(utilisateur, panier, adressClient.getNom(), adressClient.getPrenom(), adressClient.getRue(),adressClient.getCp(), adressClient.getVille());
+			System.out.println("bismaeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+utilisateur.getIdentifiant());
+		   Commande commande = panierService.creatOrderManga(utilisateur, panier, Client.getNom(), Client.getPrenom(),Client.getRue(),Client.getCp(), Client.getVille());
 		   return ResponseEntity.ok(commande);
 			
 		}

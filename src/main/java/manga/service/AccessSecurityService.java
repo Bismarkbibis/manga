@@ -18,6 +18,7 @@ public class AccessSecurityService {
 
 	@Autowired
 	private TokenRepository tokenRepository;
+	
 	public Optional<Token> findToken(HttpServletRequest request){
 		String valeurToken=request.getHeader("Authorization");
 		
@@ -29,7 +30,7 @@ public class AccessSecurityService {
 		}else {
 			// connesion avec authentificatiioon
 			valeurToken = valeurToken.replace("Bearer ", "");//je remplace mot Bearer et lespace part une chaien vide pour garder uniquement le token
-//			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+valeurToken+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><");
+
 			Optional<Token> optional=tokenRepository.selectByValeur(valeurToken);
 			return optional;
 		}

@@ -6,11 +6,7 @@ public class ClientEmprunter {
 
 //	private String MangaNom;
 
-	private int TomNom;
-
-	private String nom;
-
-	private String prenom;
+	private String Tom;
 
 	private String rue;
 
@@ -18,28 +14,12 @@ public class ClientEmprunter {
 
 	private String ville;
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public String getTom() {
+		return Tom;
 	}
 
-	public int getTomNom() {
-		return TomNom;
-	}
-
-	public void setTomNom(int tomNom) {
-		TomNom = tomNom;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setTom(String tom) {
+		Tom = tom;
 	}
 
 	public String getRue() {
@@ -66,6 +46,7 @@ public class ClientEmprunter {
 		this.ville = ville;
 	}
 
+	
 	
 
 }

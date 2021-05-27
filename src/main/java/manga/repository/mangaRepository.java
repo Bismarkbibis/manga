@@ -28,9 +28,16 @@ public interface MangaRepository extends JpaRepository<Manga, Integer> {
 	public Manga findMangaOneByNom (String paraNom);
 	
 	
-	@Query("SELECT m FROM Manga m join m.toms t WHERE t.id = :paaraId")
-	public Optional<Manga> findTomByNomManga (int paaraId);
+	@Query("SELECT m FROM Manga m join m.toms t WHERE t.id = :paraId")
+	public List<Manga> findTomByNomManga (int paraId);
 	
+	
+	@Query("SELECT m FROM Manga m WHERE m.langue = :paraId")
+	public List<Manga> findMangaByLangueManga (int paraId);
+	
+	
+//	@Query("SELECT m FROM Manga m join m.langue l WHERE l.id = :paraId")
+//	public List<Manga> findMangaByLangueManga (int paraId);
 	
 	
 //	@Query("SELECT m FROM Manga m WHERE m.tom=:parastom")
