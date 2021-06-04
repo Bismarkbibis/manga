@@ -1,8 +1,5 @@
 package manga.controller;
 
-import java.util.HashMap;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,38 +11,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import manga.Http.TomInsert;
 import manga.Outile.CustomedException;
-import manga.model.Reservation;
+import manga.model.Role;
+import manga.model.Tom;
 import manga.model.Utilisateur;
 import manga.service.AccessSecurityService;
-import manga.service.EmprunterService;
+import manga.service.AdminService;
 
 @RestController
 @CrossOrigin("*")
-public class ReservationControlleur {
-
+public class TomControlleur {
 	@Autowired
 	private AccessSecurityService accessSecurityService;
-	
 	@Autowired
-	private EmprunterService emprunterService;
-	
-	@PostMapping("/client-reserve")
-	private ResponseEntity<Reservation> ClientReservation (HttpServletRequest request,@RequestBody List<HashMap<String, String>> mangaReserve){
-		
-		Utilisateur utilisateur =accessSecurityService.findUserByToken(request);
-		if (utilisateur!= null) {
-			System.out.println(""+utilisateur);
+	private AdminService adminService;
+
+	@PostMapping("/insert-tom")
+	public ResponseEntity<Tom> inserTomManga(HttpServletRequest request, Utilisateur utilisateur,
+			@RequestBody TomInsert tom) {
+		Boolean admin = accessSecurityService.verifyRole(request, Role.ADMIN);
+
+		if (admin) {
 			try {
-				Reservation reservation = emprunterService.clientReserve(utilisateur, mangaReserve);
-				System.out.println(""+reservation);
-				return ResponseEntity.ok(reservation);
+			
+				Tom tom2 = adminService.insertTomManga(utilisateur, tom.getNom(), tom.getManga(),tom.getNumero(),tom.getNombrePage(), tom.getDateSortir(), tom.getNumImage(), tom.getTitre(),tom.getPrix(), tom.getDescription());
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+tom2);
+				return ResponseEntity.ok(tom2);
 			} catch (CustomedException e) {
 				e.printStackTrace();
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 			}
-			
 		}
 		return null;
+
 	}
 }

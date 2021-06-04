@@ -90,8 +90,4 @@ public class RegistreRentrant {
 		return "RegistreRentrant [nom=" + nom + ", prenom=" + prenom + ", identifiant=" + identifiant + ", age=" + age
 				+ ", numero=" + numero + ", email=" + email + "]";
 	}
-
-	
-
-
 }

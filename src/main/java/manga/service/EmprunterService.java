@@ -91,21 +91,21 @@ public class EmprunterService {
 		return null;
 	}
 
-	public Emprunter EmprunterTom(Utilisateur utilisateur, String Tom, String rue,String cp, String ville) throws CustomedException {
+	public Emprunter EmprunterTom(Utilisateur utilisateur, int Tom, String rue,String cp, String ville) throws CustomedException {
 		HashMap<String, String> erreur = new HashMap<>();
 
 
-		Optional<Tom> tom = tomRepository.findTomByNom(Tom);
+		Optional<Tom> tom = tomRepository.findTomById(Tom);
 
 		if (utilisateur.getNombreEmprunter() >= MAX_EMPRUNTER) {
 			erreur.put("Depassement", "Le nombre manga emprunter est depasser");
 		}
 
 // verifier si le compte est bloquer ou pas
-
-		
+		System.out.println("ddddddddddddddddddddddd"+tom);
 		if (tom.isPresent()) {
 			Tom tom01 = tom.get();
+			System.out.println("ddddddddddddddddddddddd"+tom01);
 			if (tom01.getStatut()==true) {
 				Emprunter emprunter = new Emprunter();
 				emprunter.setUtilisateur(utilisateur);
@@ -115,7 +115,6 @@ public class EmprunterService {
 				emprunter.setCp(cp);
 				emprunter.setRue(rue);
 				emprunter.setVille(ville);
-
 				// date de emprunt
 				Date date01 = new Date();
 				emprunter.setDateEmprunt(date01);
@@ -126,9 +125,8 @@ public class EmprunterService {
 				date01 = calendar.getTime();
 				emprunter.setDateRetour(date01);
 				tom01.setEmprunter(emprunter);
-//						tom.setManga(manga);
-
-// 						user nombre emprunter
+//				tom.setManga(manga);
+// 				user nombre emprunter
 				utilisateur.setNombreEmprunter(utilisateur.getNombreEmprunter() + 1);
 				tom01.setStatut(false);
 				emprunterRepository.save(emprunter);
@@ -137,7 +135,6 @@ public class EmprunterService {
 		} else {
 			erreur.put("Tom Emprunter", "tom deja emprunter");
 		}
-
 		if (!erreur.isEmpty()) {
 			CustomedException ex = new CustomedException(erreur);
 			throw ex;

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import manga.Http.AdressClient;
 import manga.model.Commande;
 import manga.model.Utilisateur;
 import manga.service.AccessSecurityService;
@@ -26,16 +24,14 @@ public class PanierControlleur {
 	private PanierService panierService;
 	@Autowired
 	private AccessSecurityService accessSecurityService;
-	
+
 	@PostMapping("/commande")
-	public ResponseEntity<Commande> clientOrder(HttpServletRequest request,@RequestBody List<HashMap<Integer, Integer>> panier, @RequestBody AdressClient Client) {
+	public ResponseEntity<Commande> clientOrder(HttpServletRequest request,@RequestBody List<HashMap<String, String>> inputs) {
 		
 		Utilisateur utilisateur = accessSecurityService.findUserByToken(request);
 		if (!(utilisateur==null)) {
-			System.out.println("bismaeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+utilisateur.getIdentifiant());
-		   Commande commande = panierService.creatOrderManga(utilisateur, panier, Client.getNom(), Client.getPrenom(),Client.getRue(),Client.getCp(), Client.getVille());
-		   return ResponseEntity.ok(commande);
-			
+			Commande commande = panierService.creatOrderManga(utilisateur, inputs);
+		    return ResponseEntity.ok(commande);
 		}
 		
 		return null;

@@ -15,6 +15,7 @@ import manga.repository.MangaRepository;
 
 @Service
 public class MangaService {
+	
 	@Autowired
 	private ActualiterRepository actualiterRepository;
 	@Autowired
@@ -26,8 +27,8 @@ public class MangaService {
 	}
 
 	// recherche part nom
-	public List<Manga> getMangaByName(String nom) {
-		List<Manga> mangaNom = mangaRepository.findbyNom(nom);
+	public Optional<Manga> getMangaByName(String nom) {
+		Optional<Manga> mangaNom = mangaRepository.findMangaByNom(nom);
 		return mangaNom;
 	}
 	// recherche part langue

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import manga.Http.LoginSortant;
 import manga.Outile.CustomedException;
-import manga.SendEmail.SendEmail;
 import manga.model.Role;
 import manga.model.Token;
 import manga.model.Utilisateur;
@@ -97,10 +96,6 @@ public class UtilisateurService {
 		Optional<Role> optional = roleRepository.findRoleByNom(Role.USER);
 		Role roleUser = optional.get();
 		utilisateur.setRole(roleUser);
-		SendEmail email2 = new SendEmail();
-
-		// email send
-		email2.Send(utilisateur.getEmail());
 
 		utilisateurRepository.save(utilisateur);
 

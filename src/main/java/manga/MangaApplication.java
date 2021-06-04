@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import manga.model.Actualiter;
-import manga.model.CataloguePage;
 import manga.model.Langue;
 import manga.model.Manga;
 import manga.model.Role;
@@ -18,7 +17,6 @@ import manga.model.Tva;
 import manga.model.Utilisateur;
 
 import manga.repository.ActualiterRepository;
-import manga.repository.CataloguePageRepository;
 import manga.repository.LangueRepository;
 import manga.repository.MangaRepository;
 
@@ -44,8 +42,6 @@ public class MangaApplication {
 	@Autowired
 	private PasswordEncoderService passwordEncoderService;
 
-	@Autowired
-	private CataloguePageRepository cataloguePageRepository;
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 	@Autowired
@@ -89,17 +85,17 @@ public class MangaApplication {
 			langueRepository.save(langue);
 
 			Manga manga = new Manga("Inazuma", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde",
-					233, 4, true, date, 12, 24);
+					 4, true, date, 12, 24);
 			manga.setTva(tva02);
 			manga.setLangue(langue);
 			mangaRepository.save(manga);
 
 			Manga manga1 = new Manga("One piece", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde",
-					233, 4, false, date, 12, 24);
+					 4, false, date, 12, 24);
 			manga1.setTva(tva02);
 			manga1.setLangue(langue);
 			mangaRepository.save(manga1);
-			Manga manga2 = new Manga("Bibo", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 233,
+			Manga manga2 = new Manga("Bibo", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 
 					4, true, date, 12, 24);
 			manga2.setTva(tva02);
 			manga2.setLangue(langue);
@@ -119,14 +115,6 @@ public class MangaApplication {
 			tom.setTitre("One piece l'arc de luffy");
 			tomRepository.save(tom);
 
-			CataloguePage AbonneCataloque = new CataloguePage();
-			cataloguePageRepository.save(AbonneCataloque);
-
-			CataloguePage ClientCataloque = new CataloguePage(CataloguePage.catalogueClient);
-			cataloguePageRepository.save(ClientCataloque);
-
-			CataloguePage InviteCataloque = new CataloguePage(CataloguePage.catalogueInviter);
-			cataloguePageRepository.save(InviteCataloque);
 //			LocalDate date2 =LocalDate.of(1999, 04, 15);
 
 			Utilisateur adminUser = new Utilisateur(" Bismark01", "Bob", "marley", "bob@gmail.com", 21, "0659940110",

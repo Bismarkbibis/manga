@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-public class InsertManga {
+public class MangaInsert {
 
 	private String numSeri;
 
@@ -16,9 +16,8 @@ public class InsertManga {
 
 	private String titre;
 
-	private int nombrePage;
 
-	private String imageNum;
+	private String image;
 
 	private String auteur;
 
@@ -35,14 +34,13 @@ public class InsertManga {
 
 	private int age;
 
-	private int destination;
 
 	private int tva;
 
 	private float prix;
 
 	
-	public InsertManga() {
+	public MangaInsert() {
 		
 	}
 
@@ -78,20 +76,13 @@ public class InsertManga {
 		this.titre = titre;
 	}
 
-	public int getNombrePage() {
-		return nombrePage;
+
+	public String getimage() {
+		return image;
 	}
 
-	public void setNombrePage(int nombrePage) {
-		this.nombrePage = nombrePage;
-	}
-
-	public String getImageNum() {
-		return imageNum;
-	}
-
-	public void setImageNum(String imageNum) {
-		this.imageNum = imageNum;
+	public void setimage(String imageNum) {
+		this.image = imageNum;
 	}
 
 	public String getAuteur() {
@@ -148,14 +139,6 @@ public class InsertManga {
 
 	public void setAge(int age) {
 		this.age = age;
-	}
-
-	public int getDestination() {
-		return destination;
-	}
-
-	public void setDestination(int destination) {
-		this.destination = destination;
 	}
 
 	public int getTva() {

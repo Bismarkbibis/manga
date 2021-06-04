@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import manga.Outile.CustomedException;
 import manga.model.Auteur;
-import manga.model.CataloguePage;
 import manga.model.Edition;
 import manga.model.Genre;
 import manga.model.Langue;
@@ -21,7 +20,6 @@ import manga.model.Tom;
 import manga.model.Tva;
 import manga.model.Utilisateur;
 import manga.repository.AuteurRepository;
-import manga.repository.CataloguePageRepository;
 import manga.repository.EditionRepository;
 import manga.repository.GenreRepository;
 import manga.repository.LangueRepository;
@@ -44,8 +42,7 @@ public class AdminService {
 	private GenreRepository genreRepository;
 	@Autowired
 	private EditionRepository editionRepository;
-	@Autowired
-	private CataloguePageRepository cataloguePageRepository;
+
 	@Autowired
 	private TomRepository tomRepository;
 
@@ -74,27 +71,27 @@ public class AdminService {
 
 	
 // insertion d'un manga
-	public Manga insertMangaAdmin(String numSeri, String nom, String description, String titre, int nombrePage,
+	public Manga insertMangaAdmin(String numSeri, String nom, String description, String titre,
 			String imageNum,String auteur, String genre, String statut, Date dateSortieManag, String langue,
-			String edition, int age, int destination, int tva, float prix) throws CustomedException {
+			String edition, int age, int tva, float prix) throws CustomedException {
 
 		HashMap<String, String> erreurs = new HashMap<>();
 //		numSeri = numSeriManga();
-		Optional<Manga> numSeriMaanga = mangaRepository.findMangaByNumSeri(numSeri);
-// a discuter
+		Optional<Manga> MangaNom = mangaRepository.findMangaByNom(nom);
+		// a discuter
 		Optional<Tva> tva01 = tvaRepository.findById(tva);
 		Optional<Auteur> auteur01 = auteurRepository.findAuteurByName(nom);
 		Optional<Genre> genre01 = genreRepository.findGenreByName(genre);
 		Optional<Langue> langue01 = langueRepository.findGenreBylangue(langue);
 		Optional<Edition> edition01 = editionRepository.findGenreByEdition(edition);
-		Optional<CataloguePage> catalogue01 = cataloguePageRepository.findById(destination);
-
-		if (!numSeriMaanga.isPresent()) {
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+MangaNom);
+		if (MangaNom.isEmpty()) {
+			
 			Manga manga01 = new Manga();
 			manga01.setNom(nom);
 			manga01.setDescription(description);
 			manga01.setNumSeri(numSeri);
-			manga01.setNombrePage(nombrePage); //supprimer
 			manga01.setNumImage(imageNum);
 			manga01.setTom(0);
 			manga01.setDateSortie(dateSortieManag);
@@ -103,31 +100,34 @@ public class AdminService {
 			manga01.setPrix(prix);
 			manga01.setStatut(true);
 			manga01.setTva(tva01.get());
-
+			System.out.println("apeleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+manga01);
+			
 			// Auteur
 			if (auteur01.isPresent()) {
 				Auteur auteur2 = auteur01.get();
 				manga01.setAuteur(auteur2);
+				System.out.println(""+auteur);
 			} else {
-				Auteur auteur2 = new Auteur();
-				auteur2.setNom(auteur);
-				manga01.setAuteur(auteur2);
-				auteurRepository.save(auteur2);
+				Auteur auteur02 = new Auteur();
+				auteur02.setNom(auteur);
+				manga01.setAuteur(auteur02);
+				System.out.println(""+auteur02);
+				auteurRepository.save(auteur02);
 			}
 			// Genre
 			if (genre01.isPresent()) {
 				Genre genre2 = genre01.get();
 				manga01.setGenre(genre2);
 			} else {
-				Genre genre2 = new Genre();
-				genre2.setNom(genre);
-				manga01.setGenre(genre2);
-				genreRepository.save(genre2);
+				Genre genre02 = new Genre();
+				genre02.setNom(genre);
+				manga01.setGenre(genre02);
+				genreRepository.save(genre02);
 			}
 			// langue
 			if (langue01.isPresent()) {
-				Langue langue2 = langue01.get();
-				manga01.setLangue(langue2);
+				Langue langue02 = langue01.get();
+				manga01.setLangue(langue02);
 			} else {
 				Langue langue2 = new Langue();
 				langue2.setNom(langue);
@@ -140,20 +140,14 @@ public class AdminService {
 				Edition edition2 = edition01.get();
 				manga01.setEdition(edition2);
 			} else {
-				Edition edition2 = new Edition();
-				edition2.setNom(edition);
-				manga01.setEdition(edition2);
-				editionRepository.save(edition2);
+				Edition edition02 = new Edition();
+				edition02.setNom(edition);
+				manga01.setEdition(edition02);
+				editionRepository.save(edition02);
 			}
-			// catalogue
-			if (catalogue01.isPresent()) {
-				CataloguePage cataloguePage = catalogue01.get(); // recuperation de catalogue concernee;
-				cataloguePage.setManga(manga01);
-			} else {
-				erreurs.put("Destination introvable",
-						"page introvable veuiller verifier votre choix de catalogur 1: Inviter 2: Client 3: Abonne");
-			}
+
 			// save manga
+			System.out.println(""+manga01);
 			mangaRepository.save(manga01);
 			return manga01;
 

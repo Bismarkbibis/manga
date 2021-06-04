@@ -25,8 +25,6 @@ public class Manga implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
@@ -44,10 +42,6 @@ public class Manga implements Serializable {
 	private float prix;
 	@Column(length = 200, nullable = false)
 	private String description;
-
-	@Column(length = 50, nullable = false)
-	private int nombrePage;
-
 	@Column(length = 50, nullable = false)
 	private int tom;
 
@@ -62,16 +56,19 @@ public class Manga implements Serializable {
 	private int age;
 
 	// dependance
+	@JsonIgnore
 	@ManyToOne
 	private Genre genre;
+	@JsonIgnore
 	@ManyToOne
 	private Edition edition;
+	@JsonIgnore
 	@ManyToOne
 	private Auteur auteur;
 	@JsonIgnore
 	@ManyToOne
 	private Tva tva;
-
+	@JsonIgnore
 	@ManyToOne
 	private Langue langue;
 	@JsonIgnore
@@ -105,7 +102,7 @@ public class Manga implements Serializable {
 		toms = new ArrayList<>();
 	}
 
-	public Manga(String nom, String numSeri, String numImage, String titre, String description, int nombrePage, int tom,
+	public Manga(String nom, String numSeri, String numImage, String titre, String description, int tom,
 			boolean statut, Date dateSortie, int age, float prix) {
 		this();
 		this.nom = nom;
@@ -113,7 +110,6 @@ public class Manga implements Serializable {
 		this.numImage = numImage;
 		this.titre = titre;
 		this.description = description;
-		this.nombrePage = nombrePage;
 		this.tom = tom;
 		this.statut = statut;
 		this.dateSortie = dateSortie;
@@ -191,14 +187,6 @@ public class Manga implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getNombrePage() {
-		return nombrePage;
-	}
-
-	public void setNombrePage(int nombrePage) {
-		this.nombrePage = nombrePage;
 	}
 
 	public int getTom() {

@@ -1,12 +1,12 @@
 package manga.Http;
 
-public class ClientEmprunter {
+public class Emprunt {
 
 
 
 //	private String MangaNom;
 
-	private String Tom;
+	private int Tom;
 
 	private String rue;
 
@@ -14,11 +14,13 @@ public class ClientEmprunter {
 
 	private String ville;
 
-	public String getTom() {
+	
+
+	public int getTom() {
 		return Tom;
 	}
 
-	public void setTom(String tom) {
+	public void setTom(int tom) {
 		Tom = tom;
 	}
 

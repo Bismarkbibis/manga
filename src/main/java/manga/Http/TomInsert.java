@@ -7,7 +7,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class InsertTom {
+public class TomInsert {
 
 	private String nom;
 	private String manga;

@@ -16,7 +16,7 @@ public interface TomRepository extends JpaRepository<Tom, Integer> {
 	@Query("select t from Tom t WHERE t.id =:tomManga")
 	public Optional<Tom> findTomById(int tomManga);
 	
-	@Query("SELECT t FROM Tom t WHERE t.numSeri=:numSeri")
+	@Query("SELECT t FROM Tom t WHERE t.nom=:numSeri")
 	public Optional<Tom> findTomByNom (String numSeri);
 	
 	// remonter tout les tom qui ont pour nom manga == one pice par exemple

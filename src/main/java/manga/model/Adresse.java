@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
-
 @Entity
 public class Adresse implements Serializable {
 
@@ -23,40 +21,37 @@ public class Adresse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
-	
+
 	@Column(nullable = false, length = 70)
 	private String nom;
 
 	@Column(nullable = false, length = 70)
 	private String prenom;
-	
 
 	@Column(nullable = false, length = 70)
 	private String rue;
-	
+
 	@Column(nullable = false, length = 50)
 	private String cp;
-	
-	@Column(nullable = false, length = 50)
+
+	@Column(length = 50)
 	private String ville;
 
-	
-	//dependance 
+	// dependance
 	@ManyToOne
 	private Utilisateur utilisateur;
-	
+
 	@OneToMany(mappedBy = "adresseLivraison")
 	private Collection<Commande> commandesLivraison;
-	
-	@OneToMany (mappedBy = "adresseFacture")
+
+	@OneToMany(mappedBy = "adresseFacture")
 	private Collection<Commande> commandesFacture;
-	
-	
+
 	public Adresse() {
-		 commandesLivraison=  new ArrayList<>();
-		 commandesFacture=  new ArrayList<>();
+		commandesLivraison = new ArrayList<>();
+		commandesFacture = new ArrayList<>();
 	}
 
 	public Adresse(String nom, String prenom, String rue, String cp, String ville) {
@@ -68,7 +63,6 @@ public class Adresse implements Serializable {
 		this.ville = ville;
 	}
 
-	
 	public Collection<Commande> getCommandesLivraison() {
 		return commandesLivraison;
 	}
@@ -137,10 +131,4 @@ public class Adresse implements Serializable {
 	public String toString() {
 		return "Adresse [nom=" + nom + ", prenom=" + prenom + ", rue=" + rue + ", cp=" + cp + ", ville=" + ville + "]";
 	}
-	
-	
-	
-	
-
-
 }
