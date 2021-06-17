@@ -181,7 +181,6 @@ public class AdminService {
 				tom01.setTitre(titre);
 				tom01.setPrix(prix);
 				tom01.setStatut(true);
-
 				tom01.setManga(manga2);
 				tomRepository.save(tom01);
 				return tom01;

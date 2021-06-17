@@ -40,6 +40,7 @@ public class PanierService {
 			Commande commande = new Commande();
 			commande.setNumero(NumeroSeri());
 			commande.setCmdDate(new Date());
+			commande.setUtilisateur(utilisateur);
 
 //			int longueur=panier.size();
 //			Adresse adresse2 = new Adresse();

@@ -9,6 +9,7 @@ public class LoginSortant {
 	private String prenom;
 	private String numero;
 	private String role ;
+	
 	public String getIdentifiant() {
 		return identifiant;
 	}

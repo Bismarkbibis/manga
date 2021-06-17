@@ -24,6 +24,7 @@ public class CommentaireService {
 	private CommentaireRepository commentaireRepository;
 	@Autowired
 	private TomRepository tomRepository;
+	
 	public Commentaire insertAvis(Utilisateur utilisateur, int idManga,int idTom ,String Commentaire) throws Exception {
 		Exception exception = new Exception("le manga que vous essayais de mettre un commentaire n'est pas disponible");
 		Optional<Manga> mangaAvis = mangaRepository.findById(idManga);
@@ -40,6 +41,7 @@ public class CommentaireService {
 				commentaire.setUtilisateur(utilisateur);
 				commentaire.setManga(manga2);
 				commentaire.setTom(tom);
+				
 				commentaire.setCmmDate(new Date());
 				commentaireRepository.save(commentaire);
 				return commentaire;
