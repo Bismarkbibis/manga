@@ -75,12 +75,17 @@ public class Utilisateur implements Serializable {
 	private Collection<Emprunter> emprunters;
 	@OneToMany(mappedBy ="utilisateur")
 	private Collection<Reservation> reservations;
+	@OneToMany(mappedBy = "utilisateur")
+	private Collection<Commande> commandes;
+	
+	
 	public Utilisateur() {
 		reservations = new ArrayList<>();
 		emprunters = new ArrayList<>();
 		commentaires = new ArrayList<>();
 		adresses = new ArrayList<>();
 		tokens = new ArrayList<>();
+		commandes = new ArrayList<>();
 	}
 
 	public Utilisateur(String identifiant, String nom, String prenom, String email,  int age,
@@ -97,6 +102,17 @@ public class Utilisateur implements Serializable {
 		this.mdp = mdp;
 		this.compteStatue= compteStatue;
 		this.nombreEmprunter= nombreEmprunter;
+	}
+	
+	
+	
+
+	public Collection<Commande> getCommandes() {
+		return commandes;
+	}
+
+	public void setCommandes(Collection<Commande> commandes) {
+		this.commandes = commandes;
 	}
 
 	public int getAge() {

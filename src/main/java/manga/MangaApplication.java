@@ -84,18 +84,18 @@ public class MangaApplication {
 			langue.setNom("Francais");
 			langueRepository.save(langue);
 
-			Manga manga = new Manga("Inazuma", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde",
+			Manga manga = new Manga("One piece", "AZERTYUI93", "onepiece.jpeg", "one piece tom 3", "meilleur manga du monde",
 					 4, true, date, 12, 24);
 			manga.setTva(tva02);
 			manga.setLangue(langue);
 			mangaRepository.save(manga);
 
-			Manga manga1 = new Manga("One piece", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde",
+			Manga manga1 = new Manga("Inazuma", "AZERTYUI93", "Inazuma.jpeg", "one piece tom 3", "meilleur manga du monde",
 					 4, false, date, 12, 24);
 			manga1.setTva(tva02);
 			manga1.setLangue(langue);
 			mangaRepository.save(manga1);
-			Manga manga2 = new Manga("Bibo", "AZERTYUI93", "one.jpg", "one piece tom 3", "meilleur manga du monde", 
+			Manga manga2 = new Manga("Naruto", "AZERTYUI93", "Naruto.jpeg", "one piece tom 3", "meilleur manga du monde", 
 					4, true, date, 12, 24);
 			manga2.setTva(tva02);
 			manga2.setLangue(langue);

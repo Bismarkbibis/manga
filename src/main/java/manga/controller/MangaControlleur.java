@@ -37,10 +37,15 @@ public class MangaControlleur {
 	@Autowired
 	private MangaService mangaService;
 
-	@GetMapping(value = "/mangas")
+	@GetMapping(value = "/actualiter")
 	private List<Actualiter> getALLL() {
 		List<Actualiter> mangas = mangaService.getAllActu();
 		return mangas;
+	}
+	@GetMapping(value = "/bd")
+	private List<Manga> getAllbd(){
+		List<Manga> mangalis =mangaService.getAllbd();
+		return mangalis;
 	}
 
 	@GetMapping(value = "/manga/{nom}")

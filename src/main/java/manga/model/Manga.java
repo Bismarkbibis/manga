@@ -27,7 +27,7 @@ public class Manga implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	private int id;
 
 	@Column(length = 50, nullable = false)
 	private String nom;
@@ -115,6 +115,15 @@ public class Manga implements Serializable {
 		this.dateSortie = dateSortie;
 		this.prix = prix;
 		this.age = age;
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Collection<Reservation> getReservations() {
@@ -294,11 +303,17 @@ public class Manga implements Serializable {
 	public void setActualiters(Collection<Actualiter> actualiters) {
 		this.actualiters = actualiters;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "Manga [nom=" + nom + "]";
+		return "Manga [id=" + id + ", nom=" + nom + ", numSeri=" + numSeri + ", numImage=" + numImage + ", titre="
+				+ titre + ", prix=" + prix + ", description=" + description + ", tom=" + tom + ", statut=" + statut
+				+ ", dateSortie=" + dateSortie + ", age=" + age + ", genre=" + genre + ", edition=" + edition
+				+ ", auteur=" + auteur + ", tva=" + tva + ", langue=" + langue + ", emprunter=" + emprunter
+				+ ", commentaires=" + commentaires + ", types=" + types + ", ligeCommandes=" + ligeCommandes
+				+ ", actualiters=" + actualiters + ", reservations=" + reservations + ", toms=" + toms + "]";
 	}
+	
+
 
 }

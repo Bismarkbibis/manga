@@ -25,6 +25,10 @@ public class MangaService {
 	public List<Actualiter> getAllActu() {
 		return actualiterRepository.findAll();
 	}
+	//tout manga
+	public List<Manga> getAllbd() {
+		return mangaRepository.findAll();
+	}
 
 	// recherche part nom
 	public Optional<Manga> getMangaByName(String nom) {

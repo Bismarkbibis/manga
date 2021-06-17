@@ -43,10 +43,12 @@ public class Commande  implements Serializable{
 	private Adresse adresseLivraison;
 	@ManyToOne
 	private Adresse adresseFacture;
-	
+	@ManyToOne
+	private Utilisateur utilisateur;
 	
 	public Commande() {
 		ligeCommandes = new ArrayList<>();
+		
 	}
 
 	public Commande(String numero, Date cmdDate, String factureNumero, Date factureDate) {
@@ -58,6 +60,16 @@ public class Commande  implements Serializable{
 	}
 
 	
+	
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
 	public Collection<LigneCommande> getLigeCommandes() {
 		return ligeCommandes;
 	}
