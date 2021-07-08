@@ -9,37 +9,24 @@ import javax.persistence.TemporalType;
 public class MangaInsert {
 
 	private String numSeri;
-
 	private String nom;
-
 	private String description;
-
 	private String titre;
-
-
 	private String image;
-
 	private String auteur;
-
 	private String genre;
-
 	private String statut;
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateSortieManag;
 
 	private String langue;
-
 	private String edition;
-
 	private int age;
 
-
 	private int tva;
-
 	private float prix;
 
-	
 	public MangaInsert() {
 		
 	}

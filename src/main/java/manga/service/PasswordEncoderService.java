@@ -23,9 +23,6 @@ public class PasswordEncoderService {
 	public boolean verifier(String rawPassword, String encoder) {
 		return passwordEncoder.matches(rawPassword, encoder);
 	}
-	
 
-	
-	
 	
 }
